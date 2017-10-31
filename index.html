@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+		<head>
+			<title>What's Happenin' Houston?</title>
+		
+				<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+
+  				<script type="text/javascript" src="project1.js"></script>
+
+  				<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDomeXKvy8n2GG1lCgJ7KZLenY7atqHdNU&callback=initMap"></script>
+
+		<!--Add this #map height/width into your CSS-->
+				<style>
+					#map {
+						height: 400px;
+						width: 800px;
+					}
+				</style>
+
+		<!--End of CSS-->		
+		</head>
+
+		<body>
+
+
+				<div id="map">	</div>
+
+
+		
+
+
+
+	<!--I haven't figured out how to put this part into the project.js file. If you attemp to do it, I think the src link up top for google maps has to be in there as well. I found a video on google on how to do this whole part below.-->
+		<script>
+
+			// This function initiates the map and pastes it to #Map in the HTML
+			function initMap() {
+						var options = {
+							zoom: 9,
+							center: {lat: 29.7604, lng: -95.3698}
+						}
+        				var map = new google.maps.Map(document.getElementById('map'), options)
+
+        	
+        	//This function allows you to plug in coordinates and it'll generate a marker on the map
+        	function addMarker(coords) {
+        		var marker = new google.maps.Marker({
+        			position: coords,
+        			map: map
+        		})
+        	}
+
+        	//example of using addMarker()
+        	addMarker({lat:29.9600004, lng:-95.5388644})
+
+        }
+
+        	
+
+		</script>
+
+
+		</body>
+</html>
