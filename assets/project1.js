@@ -64,6 +64,11 @@ var cuisineList = [];
 		console.log("Rating: " + response.restaurants[i].restaurant.user_rating.aggregate_rating);
 		console.log("Rank: " + response.restaurants[i].restaurant.user_rating.rating_text);
 		console.log("Number Of Votes: " + response.restaurants[i].restaurant.user_rating.votes);
+		console.log("Latitude: " + response.restaurants[i].restaurant.location.latitude);
+		console.log("Longitude: " + response.restaurants[i].restaurant.location.longitude);
+
+
+
 		}
 
 		});
