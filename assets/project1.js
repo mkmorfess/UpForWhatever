@@ -48,7 +48,8 @@ var long = [];
 		var cuisineRandom = cuisineList[Math.floor(Math.random() * cuisineList.length)];
 		console.log(cuisineRandom)
 		var queryURL2 = "https://developers.zomato.com/api/v2.1/search?entity_type=city&q=" + cuisineRandom + "&count=5&lat=29.7604&lon=-95.3698&radius=5000&cuisines=" + cuisineRandom + "&sort=real_distance"
-
+		lat = [];
+		long = [];
 
 	$.ajax({
 		url: queryURL2,
@@ -78,8 +79,7 @@ var long = [];
 
 		}
 
-		lat = [];
-		long = [];
+		
 
 
 		});
