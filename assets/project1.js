@@ -58,6 +58,7 @@ var cuisineList = [];
 
 		for (var i = 0; i < response.restaurants.length; i++) {
 
+		console.log("________________________________________")
 		console.log("Restaurant Name: " + response.restaurants[i].restaurant.name);
 		console.log("Average Cost For Two: " + response.restaurants[i].restaurant.average_cost_for_two);
 		console.log("Image: " + response.restaurants[i].restaurant.photos_url);
