@@ -27,6 +27,8 @@ $(document).ready(function(){
 var queryURL1 = "https://developers.zomato.com/api/v2.1/cuisines?city_id=277&lat=29.7604&lon=-95.3698"
 var api_key = "c401c9eff451fccdbc6ac1dbacaa0e55"
 var cuisineList = [];
+var lat = [];
+var long = [];
 	
 	$.ajax({
 		url: queryURL1,
@@ -68,39 +70,23 @@ var cuisineList = [];
 		console.log("Latitude: " + response.restaurants[i].restaurant.location.latitude);
 		console.log("Longitude: " + response.restaurants[i].restaurant.location.longitude);
 
+		lat.push(response.restaurants[i].restaurant.location.latitude);
+		long.push(response.restaurants[i].restaurant.location.longitude);
 
+		console.log(lat);
+		console.log(long);
 
 		}
+
+		lat = [];
+		long = [];
+
 
 		});
 
 	});
 
 });
-
-
-        	
-
-		// $("#bars").on("click", function() {
-
-		// 	// .html() the top 5 bars in the houston area
-
-		// })
-
-		// $("#nightlife").on("click", function() {
-
-		// 	// .html() the top 5 clubs in the houston area
-
-		// })
-
-		// $("#restaurants").on("click", function() {
-
-		// 	// .html() the top 5 restaurants in the houston area
-			
-		// })
-
-
-
 
 
 });
