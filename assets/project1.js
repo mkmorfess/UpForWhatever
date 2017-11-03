@@ -1,3 +1,5 @@
+
+
 function initMap() {
 	var options = {
 		zoom: 9,
@@ -17,10 +19,11 @@ function initMap() {
 
 	//example of using addMarker()
 	addMarker({lat:29.9600004, lng:-95.5388644})
+	// addMarker({lat:lat[0], lng:long[0]})
 
 }
 
-$(document).ready(function(){
+
 
 	// API Website https://developers.zomato.com/documentation#!/restaurant/search
 
@@ -46,8 +49,8 @@ var long = [];
  	$("#random").on("click", function() {
 
 		var cuisineRandom = cuisineList[Math.floor(Math.random() * cuisineList.length)];
-		console.log(cuisineRandom)
-		var queryURL2 = "https://developers.zomato.com/api/v2.1/search?entity_type=city&q=" + cuisineRandom + "&count=5&lat=29.7604&lon=-95.3698&radius=5000&cuisines=" + cuisineRandom + "&sort=real_distance"
+		$("#cuisine").text(cuisineRandom)
+		var queryURL2 = "https://developers.zomato.com/api/v2.1/search?entity_type=city&q=" + cuisineRandom + "&count=5&lat=29.7604&lon=-95.3698&radius=40000"
 		lat = [];
 		long = [];
 
@@ -79,8 +82,6 @@ var long = [];
 
 		}
 
-		
-
 
 		});
 
@@ -89,4 +90,3 @@ var long = [];
 });
 
 
-});
