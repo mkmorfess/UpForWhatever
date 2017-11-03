@@ -49,6 +49,7 @@ var api_key = "c401c9eff451fccdbc6ac1dbacaa0e55"
 var cuisineList = [];
 var lat = [];
 var long = [];
+var restaurants = 1;
 
 // this first ajax gets the cuisine list from zomato and pushes it into the array of cuisineList
 	
@@ -72,9 +73,11 @@ var long = [];
 // .. then it adds the text of whatever cuisine it chose to the HTML page..
 		$("#cuisine").text(cuisineRandom)
 
-		var queryURL2 = "https://developers.zomato.com/api/v2.1/search?entity_type=city&q=" + cuisineRandom + "&count=5&lat=29.7604&lon=-95.3698&radius=40000"
+		var queryURL2 = "https://developers.zomato.com/api/v2.1/search?entity_type=city&q=" + cuisineRandom + "&count=3&lat=29.7604&lon=-95.3698&radius=40000"
 		lat = [];
 		long = [];
+		restaurants = 1;
+		info = 1;
 		
 		deleteMarkers();
 
@@ -87,21 +90,98 @@ var long = [];
 		method: "GET"
 	}).done(function(response) {
 		//this creates an initial JSON response to find what information you need
-		console.log(response);
+		console.log(response.restaurants);
+
+	if (response.restaurants.length === 0) {
+
+			for (var i = 0; i < 3; i++) {
+
+			$("#restaurant-" + restaurants).text("No Restaurants Found")
+
+		
+		$("#info-" + info).html("");
+
+		info++
+		restaurants++
+			
+			}
+
+		}
+
+
+	else if (response.restaurants.length === 1) {
+
+			for (var i = 0; i < 2; i++) {
+
+			$("#restaurant-" + restaurants).text("")
+
+		
+		$("#info-" + info).html("");
+
+		info++
+		restaurants++
+
+		}
+
+			for (var i = 0; i < 1; i++) {
+
+				$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name)
+
+			
+		$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
+		"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
+		"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
+		"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
+
+			}
+			
+
+		}
+
+		else if (response.restaurants.length === 2) {
+
+			for (var i = 0; i < 1; i++) {
+
+			$("#restaurant-" + restaurants).text("")
+
+		
+		$("#info-" + info).html("");
+
+		info++
+		restaurants++
+
+		}
+
+			for (var i = 0; i < 2; i++) {
+
+				$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name)
+
+			
+		$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
+		"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
+		"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
+		"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
+
+			}
+			
+
+		}
+
+	else {
 
 		for (var i = 0; i < response.restaurants.length; i++) {
 
-			//then it runs through this for loop creating a console.log for each of the 5 restaurants...
+			$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name)
 
-		console.log("________________________________________")
-		console.log("Restaurant Name: " + response.restaurants[i].restaurant.name);
-		console.log("Average Cost For Two: " + response.restaurants[i].restaurant.average_cost_for_two);
-		console.log("Image: " + response.restaurants[i].restaurant.photos_url);
-		console.log("Rating: " + response.restaurants[i].restaurant.user_rating.aggregate_rating);
-		console.log("Rank: " + response.restaurants[i].restaurant.user_rating.rating_text);
-		console.log("Number Of Votes: " + response.restaurants[i].restaurant.user_rating.votes);
+			//then it runs through this for loop creating a console.log for each of the 3 restaurants...
+		
+		$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
+		"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
+		"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
+		"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
 		console.log("Latitude: " + response.restaurants[i].restaurant.location.latitude);
 		console.log("Longitude: " + response.restaurants[i].restaurant.location.longitude);
+		console.log("Image: " + response.restaurants[i].restaurant.photos_url)
 
 		//we then are pushing the float number (decimal number) into the lat/long array...
 
@@ -115,9 +195,11 @@ var long = [];
 
 		addMarker({lat:lat[i], lng:long[i]})
 		console.log(markers);
-
+		restaurants++
+		info++
 		}
 
+	}
 
 
 		});
