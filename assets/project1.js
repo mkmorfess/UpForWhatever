@@ -133,6 +133,11 @@ var restaurants = 1;
 		"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
 		"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
 
+		lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
+		long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
+
+		addMarker({lat:lat[i], lng:long[i]})
+
 			}
 			
 
@@ -161,6 +166,11 @@ var restaurants = 1;
 		"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
 		"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
 		"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
+
+		lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
+		long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
+
+		addMarker({lat:lat[i], lng:long[i]})
 
 			}
 			
