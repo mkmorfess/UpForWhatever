@@ -1,5 +1,8 @@
 var map;
+var restaurantName = "Tester"
+var restaurantAddress = "Test2"
 var markers = [];
+var contentString = "<h3>" + restaurantName + "</h3><h4>" + restaurantAddress + "</h4>"
 
 //this function initializes the google map on the screen
 
@@ -11,6 +14,9 @@ function initMap() {
 
 	map = new google.maps.Map(document.getElementById('map'), options)
 
+	var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
 	
 	//This function allows you to plug in coordinates and it'll generate a marker on the map
 	function addMarker(coords) {
@@ -19,7 +25,11 @@ function initMap() {
 			map: map
 		})
 		markers.push(marker);
-	}
+
+	marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+}
 
 	//function that goes through the markers array - helps to delete markers
 
@@ -50,6 +60,8 @@ var cuisineList = [];
 var lat = [];
 var long = [];
 var restaurants = 1;
+var userLat;
+var userLong;
 
 // this first ajax gets the cuisine list from zomato and pushes it into the array of cuisineList
 	
@@ -72,8 +84,9 @@ var restaurants = 1;
 		var cuisineRandom = cuisineList[Math.floor(Math.random() * cuisineList.length)];
 // .. then it adds the text of whatever cuisine it chose to the HTML page..
 		$("#cuisine").text(cuisineRandom)
-
-		var queryURL2 = "https://developers.zomato.com/api/v2.1/search?entity_type=city&q=" + cuisineRandom + "&count=3&lat=29.7604&lon=-95.3698&radius=40000"
+		userLat = 29.7604;
+		userLong = -95.3698;
+		var queryURL2 = "https://developers.zomato.com/api/v2.1/search?entity_type=city&q=" + cuisineRandom + "&count=20&lat=" + userLat + "&lon=" + userLong + "&radius=40000&sort=real_distance&sort=rating"
 		lat = [];
 		long = [];
 		restaurants = 1;
@@ -189,22 +202,23 @@ var restaurants = 1;
 		"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
 		"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
 		"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
-		console.log("Latitude: " + response.restaurants[i].restaurant.location.latitude);
-		console.log("Longitude: " + response.restaurants[i].restaurant.location.longitude);
-		console.log("Image: " + response.restaurants[i].restaurant.photos_url)
+		// console.log("Latitude: " + response.restaurants[i].restaurant.location.latitude);
+		// console.log("Longitude: " + response.restaurants[i].restaurant.location.longitude);
+		// console.log("Image: " + response.restaurants[i].restaurant.photos_url)
 
 		//we then are pushing the float number (decimal number) into the lat/long array...
 
 		lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
 		long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
 
-		console.log(lat);
-		console.log(long);
+		// console.log(lat);
+		// console.log(long);
 
 		//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
 
 		addMarker({lat:lat[i], lng:long[i]})
-		console.log(markers);
+		// console.log(markers);
+		console.log(contentString);
 		restaurants++
 		info++
 		}
@@ -221,3 +235,8 @@ var restaurants = 1;
 	}
 
 
+// user inputs address and clicks a button
+// then once the button is clicked.. it make an ajax call for the geocode lat and long
+// aka response.results.geometry.lat and response.results.geometry.long
+// once the code grabs those responses, it will then push into the variable userLat and userLong
+// which then would be populated onto the queryURL2 variable
