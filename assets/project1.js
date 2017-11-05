@@ -1,8 +1,9 @@
 var map;
-var restaurantName = "Tester"
-var restaurantAddress = "Test2"
+var restaurantName = [];
+var restaurantAddress = [];
 var markers = [];
-var contentString = "<h3>" + restaurantName + "</h3><h4>" + restaurantAddress + "</h4>"
+var contentString = [];
+var infowindows = [];
 
 //this function initializes the google map on the screen
 
@@ -14,22 +15,32 @@ function initMap() {
 
 	map = new google.maps.Map(document.getElementById('map'), options)
 
-	var infowindow = new google.maps.InfoWindow({
-          content: contentString
-        });
 	
+	
+
+
 	//This function allows you to plug in coordinates and it'll generate a marker on the map
-	function addMarker(coords) {
+	function addMarker(coords, restInfo) {
 		var marker = new google.maps.Marker({
 			position: coords,
 			map: map
 		})
+
 		markers.push(marker);
 
-	marker.addListener('click', function() {
+		var infowindow = new google.maps.InfoWindow({
+          content: restInfo
+        });
+
+		contentString.push(infowindow);
+
+    
+		marker.addListener('click', function() {
           infowindow.open(map, marker);
         });
-}
+
+
+	}
 
 	//function that goes through the markers array - helps to delete markers
 
@@ -37,6 +48,7 @@ function initMap() {
         for (var i = 0; i < markers.length; i++) {
           markers[i].setMap(map);
         }
+
       }
 
       //function that sets the setMapOnAll function to null - helps to delete markers
@@ -51,6 +63,8 @@ function initMap() {
 		clearMarkers();
 		markers = [];
 	}
+
+
 
 	// API Website https://developers.zomato.com/documentation#!/restaurant/search
 
@@ -86,9 +100,13 @@ var userLong;
 		$("#cuisine").text(cuisineRandom)
 		userLat = 29.7604;
 		userLong = -95.3698;
-		var queryURL2 = "https://developers.zomato.com/api/v2.1/search?entity_type=city&q=" + cuisineRandom + "&count=20&lat=" + userLat + "&lon=" + userLong + "&radius=40000&sort=real_distance&sort=rating"
+		var queryURL2 = "https://developers.zomato.com/api/v2.1/search?entity_type=city&q=" + cuisineRandom + "&count=3&lat=" + userLat + "&lon=" + userLong + "&radius=40000&sort=real_distance&sort=rating"
 		lat = [];
 		long = [];
+		restaurantName = [];
+		restaurantAddress = [];
+		infowindows = [];
+		contentString = [];
 		restaurants = 1;
 		info = 1;
 		
@@ -149,7 +167,15 @@ var userLong;
 		lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
 		long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
 
-		addMarker({lat:lat[i], lng:long[i]})
+		restaurantName.push(response.restaurants[i].restaurant.name)
+		restaurantAddress.push(response.restaurants[i].restaurant.location.address)
+		infowindows.push("<h3>Restaurant: " + restaurantName[i] + "</h3><h4>Address: " + restaurantAddress[i] + "</h4>")
+
+		console.log(restaurantName);
+		console.log(restaurantAddress);
+
+		//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
+		addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
 
 			}
 			
@@ -183,8 +209,15 @@ var userLong;
 		lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
 		long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
 
-		addMarker({lat:lat[i], lng:long[i]})
+		restaurantName.push(response.restaurants[i].restaurant.name)
+		restaurantAddress.push(response.restaurants[i].restaurant.location.address)
+		infowindows.push("<h3>Restaurant: " + restaurantName[i] + "</h3><h4>Address: " + restaurantAddress[i] + "</h4>")
 
+		console.log(restaurantName);
+		console.log(restaurantAddress);
+
+		//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
+		addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
 			}
 			
 
@@ -210,13 +243,20 @@ var userLong;
 
 		lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
 		long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
+		contentString.push()
 
 		// console.log(lat);
 		// console.log(long);
 
-		//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
+		restaurantName.push(response.restaurants[i].restaurant.name)
+		restaurantAddress.push(response.restaurants[i].restaurant.location.address)
+		infowindows.push("<h3>Restaurant: " + restaurantName[i] + "</h3><h4>Address: " + restaurantAddress[i] + "</h4>")
 
-		addMarker({lat:lat[i], lng:long[i]})
+		console.log(restaurantName);
+		console.log(restaurantAddress);
+
+		//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
+		addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
 		// console.log(markers);
 		console.log(contentString);
 		restaurants++
