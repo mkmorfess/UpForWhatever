@@ -77,7 +77,7 @@ $("#random").submit(function(event) {
 			else {
 		
 
-				//I have NO clue how this even works.. found it online on stack overflow... LOL 
+				//I have NO clue how this even works.. found it online on stack overflow... LOL https://stackoverflow.com/questions/7499862/how-to-geocode-an-address-into-lat-long-with-google-maps
 				var geocoder = new google.maps.Geocoder();
 				geocoder.geocode( { 'address': userAddress}, function(results, status) {
   					if (status == google.maps.GeocoderStatus.OK) {
