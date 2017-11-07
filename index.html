@@ -5,40 +5,43 @@
 		
 				<link rel="stylesheet" type="text/css" href="assets/style.css">
 
+        <link rel="stylesheet" href="animate.min.css"> 
+
   				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+        <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">   
+          
 
 
   				<meta charset="utf-8">
     			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
     			<meta name="description" content="">
     			<meta name="author" content="">
-
-    			<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
-
-    			<link href="https://fonts.googleapis.com/css?family=Rozha+One" rel="stylesheet">
-	</head>
+          
+          <link href="https://fonts.googleapis.com/css?family=Rozha+One" rel="stylesheet">
+	 </head>
 
 		<body>
 
 
-    <!-- Page Content -->
+    <!-- Main Content -->
     <div class="container" id="mainDiv">
 
     	 <div class="col-lg-4" id="topButton">
-          <h1 id="topHeader">Up For Whatever?</h1>
+          <h1 class="animated jello" id="topHeader">Up For Whatever?</h1>
           <h4 id="buttonText">Type in your location below to find a random cuisine near you.</h4>
           <form id="random">
             <h4>Your Location:<h4> <input type="text" name="address" id="input">
               <div id="error"></div>
               <br>
-              <input type="submit" value="Let's Go!" class="btn btn-primary">
+              <input type="submit" value="Let's Go!" class="btn btn-primary" id="submit">
             </form>
 
           <!--Random Restaurants button works. Check the console.log() on the inspector. -->
         </div>
 
-      <!-- Heading Row -->
+      <!-- Google Map -->
       <div class="row my-4">
         <div class="col-lg-8" id="map">
         </div>
@@ -91,10 +94,10 @@
             <!-- </div> -->
           </div>
         </div>
-        <!-- /.col-md-4 -->
+        
 
       </div>
-      <!-- /.row -->
+      
 
     </div>
     <!-- /.container -->
@@ -102,12 +105,12 @@
     <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Grub Generator 2017</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Up For Whatever? 2017</p>
       </div>
       <!-- /.container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript -->
+  
     
 
 		</body>
