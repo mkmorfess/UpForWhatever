@@ -4,6 +4,7 @@ var restaurantAddress = [];
 var markers = [];
 var contentString = [];
 var infowindows = [];
+var loading = false;
 
 
 //this function initializes the google map on the screen
@@ -63,70 +64,69 @@ function initMap() {
 	// API Website https://developers.zomato.com/documentation#!/restaurant/search
 
 
-var userLat = [];
-var userLong = [];
+	var userLat = [];
+	var userLong = [];
 
 
-$("#random").submit(function(event) {
- 				event.preventDefault();
- 				var userAddress = $("#input").val().trim();
- 				$("#error").empty();
+	$("#random").submit(function(event) {
+		event.preventDefault();	
+		var userAddress = $("#input").val().trim();
+		$("#error").empty();
 
- 			if (userAddress === "") {
-					$("#error").html("<br>You must enter a location before clicking submit")
-			} 
+		if (userAddress === "") {
+			$("#error").html("<br>You must enter a location before clicking submit")
+		} 
 
-			else {
-		
+		else {
 
-				//I have NO clue how this even works.. found it online on stack overflow... LOL https://stackoverflow.com/questions/7499862/how-to-geocode-an-address-into-lat-long-with-google-maps
-				var geocoder = new google.maps.Geocoder();
-				geocoder.geocode( { 'address': userAddress}, function(results, status) {
-  					if (status == google.maps.GeocoderStatus.OK) {
-   			 			map.setCenter(results[0].geometry.location);
-   			 			userLat.push(results[0].geometry.location.lat());
-   			 			userLong.push(results[0].geometry.location.lng());
-   			 			console.log(results[0].geometry.location.lat())
-   			 			console.log(results[0].geometry.location.lng())
-   			 			console.log(userLat);
-   			 			console.log(userLong);
-   			 			}
-					else {
-    					$("#error").html("<br>Geocode was not successful for the following reason: " + status + " Please try again");
-  					}
-
+			//I have NO clue how this even works.. found it online on stack overflow... LOL https://stackoverflow.com/questions/7499862/how-to-geocode-an-address-into-lat-long-with-google-maps
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode( { 'address': userAddress}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+			 			map.setCenter(results[0].geometry.location);
+			 			userLat.push(results[0].geometry.location.lat());
+			 			userLong.push(results[0].geometry.location.lng());
+			 			console.log(results[0].geometry.location.lat())
+			 			console.log(results[0].geometry.location.lng())
+			 			console.log(userLat);
+			 			console.log(userLong);
+			 			}
+				else {
+					$("#error").html("<br>Geocode was not successful for the following reason: " + status + " Please try again");
+					}
 
 
-	var queryURL1 = "https://developers.zomato.com/api/v2.1/cuisines?lat=" + userLat + "&lon=" + userLong
-	var api_key = "c401c9eff451fccdbc6ac1dbacaa0e55"
-	var cuisineList = [];
-	var lat = [];
-	var long = [];
-	var restaurants = 1;
-	
 
-// this first ajax gets the cuisine list from zomato and pushes it into the array of cuisineList
-	
-$.ajax({
-		url: queryURL1,
-		headers: { 'user-key': api_key },
-		method: "GET"
-	}).done(function(response){
+			var queryURL1 = "https://developers.zomato.com/api/v2.1/cuisines?lat=" + userLat + "&lon=" + userLong
+			var api_key = "c401c9eff451fccdbc6ac1dbacaa0e55"
+			var cuisineList = [];
+			var lat = [];
+			var long = [];
+			var restaurants = 1;
+			
 
-		for (var i = 0; i < response.cuisines.length; i++) {
-		cuisineList.push(response.cuisines[i].cuisine.cuisine_name);
+		// this first ajax gets the cuisine list from zomato and pushes it into the array of cuisineList
+		if (loading === true){
+			$("")
 		}
+		else{
+			$.ajax({
+				url: queryURL1,
+				headers: { 'user-key': api_key },
+				method: "GET"
+			}).done(function(response){
 
-		// console.log(cuisineList);
+				loading = true
 
-		//When you click on this button with the ID of random...
- 			
-   			
-   					
+				for (var i = 0; i < response.cuisines.length; i++) {
+				cuisineList.push(response.cuisines[i].cuisine.cuisine_name);
+				}
 
-  					
-  				
+				// console.log(cuisineList);
 
+				//When you click on this button with the ID of random...
+		 			
+			   		
 				// .. it gets a random string from the cuisineList array using the Math.random()..
 				var cuisineRandom = cuisineList[Math.floor(Math.random() * cuisineList.length)];
 				// .. then it adds the text of whatever cuisine it chose to the HTML page.. entity_type=city&
@@ -141,172 +141,168 @@ $.ajax({
 				restaurants = 1;
 				info = 1;
 				// console.log(queryURL2);
-		
+
 				deleteMarkers();
 
 				// then it calls another ajax function that uses the queryURL2 up above and utilizes the random cuisine it chose in its search to find 5 restaurants that are related to that cuisine...
-
 
 				$.ajax({
 					url: queryURL2,
 					headers: { 'user-key': api_key },
 					method: "GET"
-				}).done(function(response) {
-					//this creates an initial JSON response to find what information you need
-					console.log(response.restaurants);
+					}).done(function(response){
+							//this creates an initial JSON response to find what information you need
+							console.log(response.restaurants);
 
-					if (response.restaurants.length === 0) {
+							if (response.restaurants.length === 0) {
 
-						for (var i = 0; i < 3; i++) {
+								for (var i = 0; i < 3; i++) {
 
-							$("#restaurant-" + restaurants).text("No Restaurants Found")
-
-		
-							$("#info-" + info).html("");
-
-							info++
-							restaurants++
-			
-						}
-
-					}
+									$("#restaurant-" + restaurants).text("No Restaurants Found")
 
 
-					else if (response.restaurants.length === 1) {
+									$("#info-" + info).html("");
 
-						for (var i = 0; i < 2; i++) {
+									info++
+									restaurants++
+					
+								}
 
-							$("#restaurant-" + restaurants).text("")
+							}
 
-		
-							$("#info-" + info).html("");
 
-							info++
-							restaurants++
+							else if (response.restaurants.length === 1) {
 
-						}
+								for (var i = 0; i < 2; i++) {
 
-						for (var i = 0; i < 1; i++) {
+									$("#restaurant-" + restaurants).text("")
 
-							$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name)
 
-								
-							$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
-							"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
-							"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
-							"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
+									$("#info-" + info).html("");
 
-							lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
-							long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
+									info++
+									restaurants++
 
-							restaurantName.push(response.restaurants[i].restaurant.name)
-							restaurantAddress.push(response.restaurants[i].restaurant.location.address)
-							infowindows.push("<h3>Restaurant: " + restaurantName[i] + "</h3><h4>Address: " + restaurantAddress[i] + "</h4>")
+								}
 
-							console.log(restaurantName);
-							console.log(restaurantAddress);
+								for (var i = 0; i < 1; i++) {
 
-							//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
-							addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
+									$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name)
 
-						}
-			
+										
+									$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
+									"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
+									"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
+									"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
 
-					}
+									lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
+									long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
 
-					else if (response.restaurants.length === 2) {
+									restaurantName.push(response.restaurants[i].restaurant.name)
+									restaurantAddress.push(response.restaurants[i].restaurant.location.address)
+									infowindows.push("<h3>Restaurant: " + restaurantName[i] + "</h3><h4>Address: " + restaurantAddress[i] + "</h4>")
 
-						for (var i = 0; i < 1; i++) {
+									console.log(restaurantName);
+									console.log(restaurantAddress);
 
-							$("#restaurant-" + restaurants).text("")
+									//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
+									addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
 
-		
-							$("#info-" + info).html("");
+								}
+							}
 
-							info++
-							restaurants++
+							else if (response.restaurants.length === 2) {
 
-						}
+								for (var i = 0; i < 1; i++) {
 
-						for (var i = 0; i < 2; i++) {
+									$("#restaurant-" + restaurants).text("")
 
-							$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name)
 
-			
-							$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
-							"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
-							"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
-							"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
+									$("#info-" + info).html("");
 
-							lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
-							long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
+									info++
+									restaurants++
 
-							restaurantName.push(response.restaurants[i].restaurant.name)
-							restaurantAddress.push(response.restaurants[i].restaurant.location.address)
-							infowindows.push("<h3>Restaurant: " + restaurantName[i] + "</h3><h4>Address: " + restaurantAddress[i] + "</h4>")
+								}
 
-							console.log(restaurantName);
-							console.log(restaurantAddress);
+								for (var i = 0; i < 2; i++) {
 
-							//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
-							addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
-						}
-			
+									$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name)
 
-					}
+					
+									$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
+									"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
+									"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
+									"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
 
-					else {
+									lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
+									long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
 
-						for (var i = 0; i < response.restaurants.length; i++) {
+									restaurantName.push(response.restaurants[i].restaurant.name)
+									restaurantAddress.push(response.restaurants[i].restaurant.location.address)
+									infowindows.push("<h3>Restaurant: " + restaurantName[i] + "</h3><h4>Address: " + restaurantAddress[i] + "</h4>")
 
-							$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name)
+									console.log(restaurantName);
+									console.log(restaurantAddress);
 
-							//then it runs through this for loop creating a console.log for each of the 3 restaurants...
-		
-							$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
-							"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
-							"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
-							"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
-							// console.log("Latitude: " + response.restaurants[i].restaurant.location.latitude);
-							// console.log("Longitude: " + response.restaurants[i].restaurant.location.longitude);
-							// console.log("Image: " + response.restaurants[i].restaurant.photos_url)
+									//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
+									addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
+								}
+							}
+							else {
 
-							//we then are pushing the float number (decimal number) into the lat/long array...
+								for (var i = 0; i < response.restaurants.length; i++) {
 
-							lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
-							long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
-							contentString.push()
+									$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name)
+									$("#restaurant-" + restaurants).addClass("animated jello")
 
-							// console.log(lat);
-							// console.log(long);
+									//then it runs through this for loop creating a console.log for each of the 3 restaurants...
 
-							restaurantName.push(response.restaurants[i].restaurant.name)
-							restaurantAddress.push(response.restaurants[i].restaurant.location.address)
-							infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong>")
+									$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
+									"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
+									"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
+									"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
+									// console.log("Latitude: " + response.restaurants[i].restaurant.location.latitude);
+									// console.log("Longitude: " + response.restaurants[i].restaurant.location.longitude);
+									// console.log("Image: " + response.restaurants[i].restaurant.photos_url)
 
-							console.log(restaurantName);
-							console.log(restaurantAddress);
+									//we then are pushing the float number (decimal number) into the lat/long array...
 
-							//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
-							addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
-							// console.log(markers);
-							console.log(contentString);
-							restaurants++
-							info++
+									lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
+									long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
+									contentString.push()
 
-						}
+									// console.log(lat);
+									// console.log(long);
 
-					}
+									restaurantName.push(response.restaurants[i].restaurant.name)
+									restaurantAddress.push(response.restaurants[i].restaurant.location.address)
+									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong>")
 
-				});
+									console.log(restaurantName);
+									console.log(restaurantAddress);
+
+									//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
+									addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
+									// console.log(markers);
+									console.log(contentString);
+									restaurants++
+									info++
+								}
+							}
+						loading = false
+					});
 
 				userLat = [];
 				userLong = [];
 				
-				});
+
+		});
+loading = false;
+				}
 				
-  				})
-				};
+ 	})
+};
 
 			})
 
