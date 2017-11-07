@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 		<head>
-			<title>Grub Generator</title>
+			<title>Up For Whatever</title>
 		
 				<link rel="stylesheet" type="text/css" href="assets/style.css">
 
   				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
 
   				<meta charset="utf-8">
     			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
@@ -24,12 +26,15 @@
     <div class="container" id="mainDiv">
 
     	 <div class="col-lg-4" id="topButton">
-          <h1 id="topHeader">Grub Generator</h1>
-          <h3 id="buttonText">Let us pick your food for you.</h3>
+          <h1 id="topHeader">Up For Whatever</h1>
+          <h4 id="buttonText">Type in your location below to find a random cuisine near you.</h4>
           <form id="random">
-            Address: <input type="text" name="address" id="input"><br>
-                     <input type="submit" value="Submit">
+            <h4>Your Location:<h4> <input type="text" name="address" id="input">
+              <div id="error"></div>
+              <br>
+            <button type="button" class="btn btn-primary" id="submit">Submit</button>
             </form>
+
           <!--Random Restaurants button works. Check the console.log() on the inspector. -->
         </div>
 
@@ -37,20 +42,17 @@
       <div class="row my-4">
         <div class="col-lg-8" id="map">
         </div>
-        <!-- /.col-lg-8 -->
-      
-        <!-- /.col-md-4 -->
       </div>
-      <!-- /.row -->
+      
 
-      <!-- Call to Action Well -->
+      <!-- Random cuisine choices / bottom of page -->
       <div class="card text-white bg-secondary my-4 text-center">
         <div class="card-body">
           <h1 id="cuisineTitle">Cuisine choices: <span class="text-white m-0" id="cuisine"></span></h1>
         </div>
       </div>
 
-      <!-- Content Row -->
+      <!-- Restaurant 1 / bottom of page -->
       <div class="row">
         <div class="col-md-4 mb-4">
           <div class="card h-100" id="box1">
@@ -58,33 +60,35 @@
               <h2 class="card-title" id="restaurant-1">Restaurant One</h2>
               <p class="card-text" id="info-1">Perfect Random Choice 1</p>
             </div>
-            <div class="card-footer" id="button-1">
-              <a href="#" class="btn btn-primary" >More Info</a>
-            </div>
+            <!-- <div class="card-footer" id="button-1"> -->
+              <!-- <a href="#" class="btn btn-primary" >More Info</a> -->
+            <!-- </div> -->
           </div>
         </div>
-        <!-- /.col-md-4 -->
+        
+        <!-- Restaurant 2 / bottom of page -->
         <div class="col-md-4 mb-4">
           <div class="card h-100" id="box2">
             <div class="card-body">
               <h2 class="card-title" id="restaurant-2">Restaurant Two</h2>
               <p class="card-text" id="info-2">Yummy Random Choice 2</p>
             </div>
-            <div class="card-footer" id="button-2">
-            	<a href="#" class="btn btn-primary">More Info</a>
-            </div>
+            <!-- <div class="card-footer" id="button-2"> -->
+            	<!-- <a href="#" class="btn btn-primary">More Info</a> -->
+            <!-- </div> -->
           </div>
         </div>
-        <!-- /.col-md-4 -->
+        
+        <!-- Restaurant 3 / bottom of page -->
         <div class="col-md-4 mb-4">
           <div class="card h-100" id="box3">
             <div class="card-body">
               <h2 class="card-title" id="restaurant-3">Restaurant Three</h2>
               <p class="card-text" id="info-3">Awesome Random Choice 3</p>
             </div>
-            <div class="card-footer" id="button-3">
-              <a href="#" class="btn btn-primary">More Info</a>
-            </div>
+            <!-- <div class="card-footer" id="button-3"> -->
+              <!-- <a href="#" class="btn btn-primary">More Info</a> -->
+            <!-- </div> -->
           </div>
         </div>
         <!-- /.col-md-4 -->
