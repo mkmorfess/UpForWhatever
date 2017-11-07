@@ -172,7 +172,7 @@ function initMap() {
 
 							if (response.restaurants.length === 0) {
 
-								box = 1
+								box = 1;
 
 								for (var i = 0; i < 3; i++) {
 
@@ -225,8 +225,7 @@ function initMap() {
 
 									restaurantName.push(response.restaurants[i].restaurant.name)
 									restaurantAddress.push(response.restaurants[i].restaurant.location.address)
-									infowindows.push("<h3>Restaurant: " + restaurantName[i] + "</h3><h4>Address: " + restaurantAddress[i] + "</h4>")
-
+									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong>")
 									console.log(restaurantName);
 									console.log(restaurantAddress);
 
@@ -282,7 +281,7 @@ function initMap() {
 
 									restaurantName.push(response.restaurants[i].restaurant.name)
 									restaurantAddress.push(response.restaurants[i].restaurant.location.address)
-									infowindows.push("<h3>Restaurant: " + restaurantName[i] + "</h3><h4>Address: " + restaurantAddress[i] + "</h4>")
+									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong>")
 
 									console.log(restaurantName);
 									console.log(restaurantAddress);
@@ -341,6 +340,7 @@ function initMap() {
 				
 
 		});
+window.scrollTo(0,document.body.scrollHeight);
 loading = false;
 				}
 				
