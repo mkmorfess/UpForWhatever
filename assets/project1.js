@@ -164,13 +164,14 @@ function initMap() {
 							for (var i = 0; i < 3; i++) {
 
 								$("#border" + border).addClass("box" + box)
-
+								$(".animated").removeClass()
+								$(".jello").removeClass()
 								box++
 								border++
-								
 
 							}
 
+							
 
 
 							if (response.restaurants.length === 0) {
