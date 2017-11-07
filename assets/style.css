@@ -61,7 +61,7 @@ title {
 	font-family: 'Rozha One', serif;
 }
 
-#box1 {
+.box1 {
 	border-style: solid;
 	border-color: #20B2AA;
 	text-align: center;
@@ -72,7 +72,7 @@ title {
 	font-family: 'Rozha One', serif;
 }
 
-#box2 {
+.box2 {
 	border-style: solid;
 	border-color: #20B2AA;
 	text-align: center;
@@ -84,7 +84,7 @@ title {
 	font-family: 'Rozha One', serif;
 }
 
-#box3 {
+.box3 {
 	border-style: solid;
 	border-color: #20B2AA;
 	text-align: center;

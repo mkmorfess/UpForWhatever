@@ -66,12 +66,15 @@ function initMap() {
 
 	var userLat = [];
 	var userLong = [];
+	var box = 1;
+	var border = 1;
 
 
 	$("#random").submit(function(event) {
 		event.preventDefault();	
 		var userAddress = $("#input").val().trim();
 		$("#error").empty();
+
 
 		if (userAddress === "") {
 			$("#error").html("<br>You must enter a location before clicking submit")
@@ -140,6 +143,7 @@ function initMap() {
 				contentString = [];
 				restaurants = 1;
 				info = 1;
+				box = 1;
 				// console.log(queryURL2);
 
 				deleteMarkers();
@@ -154,43 +158,64 @@ function initMap() {
 							//this creates an initial JSON response to find what information you need
 							console.log(response.restaurants);
 
+							border = 1;
+							box = 1;
+
+							for (var i = 0; i < 3; i++) {
+
+								$("#border" + border).addClass("box" + box)
+
+								box++
+								border++
+
+							}
+
 							if (response.restaurants.length === 0) {
+
+								box = 1
 
 								for (var i = 0; i < 3; i++) {
 
-									$("#restaurant-" + restaurants).text("No Restaurants Found")
-
+									$("#restaurant-" + restaurants).html("")
 
 									$("#info-" + info).html("");
 
+									$(".box" + box).removeClass()
+
 									info++
 									restaurants++
+									box++
 					
 								}
+
+								$("#restaurant-" + 2).text("No Restaurants Found. Try Again!")
 
 							}
 
 
 							else if (response.restaurants.length === 1) {
 
-								for (var i = 0; i < 2; i++) {
+								// for (var i = 0; i < 2; i++) {
 
-									$("#restaurant-" + restaurants).text("")
+									$("#restaurant-" + 1).text("")
+									$(".box" + 1).removeClass()
+									$("#info-" + 1).html("");
 
+									$("#restaurant-" + 3).text("")
+									$(".box" + 3).removeClass();
+									$("#info-" + 3).html("");
 
-									$("#info-" + info).html("");
+								// 	info++
+								// 	restaurants++
 
-									info++
-									restaurants++
-
-								}
+								// }
 
 								for (var i = 0; i < 1; i++) {
 
-									$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name)
+									$("#restaurant-" + 2).text(response.restaurants[i].restaurant.name)
 
 										
-									$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
+									$("#info-" + 2).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
 									"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
 									"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
 									"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
@@ -213,19 +238,36 @@ function initMap() {
 
 							else if (response.restaurants.length === 2) {
 
+								restaurants = 2;
+								info = 2;
+								box = 2;
+
 								for (var i = 0; i < 1; i++) {
 
 									$("#restaurant-" + restaurants).text("")
-
+									$(".box" + box).removeClass()
 
 									$("#info-" + info).html("");
 
 									info++
 									restaurants++
+									box++
 
 								}
 
+								restaurants = 1;
+								info = 1;
+								box = 1;
+
 								for (var i = 0; i < 2; i++) {
+
+									if (i === 1) {
+										restaurants++
+										info++
+										box++
+									}
+
+									else {
 
 									$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name)
 
@@ -247,6 +289,7 @@ function initMap() {
 
 									//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
 									addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
+									}
 								}
 							}
 							else {
