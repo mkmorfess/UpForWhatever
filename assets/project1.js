@@ -66,12 +66,14 @@ function initMap() {
 var userLat = [];
 var userLong = [];
 
+
 $("#random").submit(function(event) {
  				event.preventDefault();
- 				var userAddress = $("#input").val().trim()
+ 				var userAddress = $("#input").val().trim();
+ 				$("#error").empty();
 
  			if (userAddress === "") {
-					alert("You must enter an address before clicking submit")
+					$("#error").html("<br>You must enter a location before clicking submit")
 			} 
 
 			else {
@@ -90,7 +92,7 @@ $("#random").submit(function(event) {
    			 			console.log(userLong);
    			 			}
 					else {
-    					alert("Geocode was not successful for the following reason: " + status + "Please try again");
+    					$("#error").html("<br>Geocode was not successful for the following reason: " + status + " Please try again");
   					}
 
 
