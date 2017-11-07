@@ -1,5 +1,5 @@
 body {
-  
+  font-family: 'Slackey', cursive;
 }
 
 @media (min-width: 992px) {
@@ -32,8 +32,11 @@ title {
 #topHeader {
 	font-family: 'Rozha One', serif;
 	font-size: 60px;    
+	/*font-family: 'Just Me Again Down Here', cursive;*/	
 }
-
+h4 {
+	font-family: 'Peralta', cursive;
+}
 #random {
 	padding-bottom: 
 }

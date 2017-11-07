@@ -73,6 +73,7 @@ function initMap() {
 	$("#random").submit(function(event) {
 		event.preventDefault();	
 		var userAddress = $("#input").val().trim();
+		var userDistance = $("#distance").val().trim();
 		$("#error").empty();
 
 
@@ -117,12 +118,13 @@ function initMap() {
 				url: queryURL1,
 				headers: { 'user-key': api_key },
 				method: "GET"
-			}).done(function(response){
+			}).done(function(response)
+			{
 
 				loading = true
 
 				for (var i = 0; i < response.cuisines.length; i++) {
-				cuisineList.push(response.cuisines[i].cuisine.cuisine_name);
+					cuisineList.push(response.cuisines[i].cuisine.cuisine_name);
 				}
 
 				// console.log(cuisineList);
@@ -134,7 +136,7 @@ function initMap() {
 				var cuisineRandom = cuisineList[Math.floor(Math.random() * cuisineList.length)];
 				// .. then it adds the text of whatever cuisine it chose to the HTML page.. entity_type=city&
 				$("#cuisine").text(cuisineRandom)
-				var queryURL2 = "https://developers.zomato.com/api/v2.1/search?q=" + cuisineRandom + "&count=3&lat=" + userLat + "&lon=" + userLong + "&radius=40000&sort=real_distance&sort=rating"
+				var queryURL2 = "https://developers.zomato.com/api/v2.1/search?q=" + cuisineRandom + "&count=3&lat=" + userLat + "&lon=" + userLong + "&radius=" + userDistance + "000&sort=real_distance&sort=rating"
 				lat = [];
 				long = [];
 				restaurantName = [];
@@ -154,7 +156,8 @@ function initMap() {
 					url: queryURL2,
 					headers: { 'user-key': api_key },
 					method: "GET"
-					}).done(function(response){
+					}).done(function(response)
+					{
 							//this creates an initial JSON response to find what information you need
 							console.log(response.restaurants);
 
@@ -337,93 +340,90 @@ function initMap() {
 
 
 
-							// function clickBox() {
-							// 	var dataZero = [cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.average_cost_for_two, response.restaurants[0].restaurant.user_rating.aggregate_rating, response.restaurants[0].restaurant.user_rating.rating_text, response.restaurants[0].restaurant.user_rating.votes]
-							// 	var dataOne = [cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.average_cost_for_two, response.restaurants[1].restaurant.user_rating.aggregate_rating, response.restaurants[1].restaurant.user_rating.rating_text, response.restaurants[1].restaurant.user_rating.votes]
-							// 	var dataTwo = [cuisineRandom, response.restaurants[2].restaurant.name, response.restaurants[2].restaurant.average_cost_for_two, response.restaurants[2].restaurant.user_rating.aggregate_rating, response.restaurants[2].restaurant.user_rating.rating_text, response.restaurants[2].restaurant.user_rating.votes]
-							// 		$(".click1").unbind("click").on("click", function () {
-							// 			var tableRow = $("<tr>")
-							// 			tableRow.attr("id", "row-" + rows)
-							// 			tableRow.addClass("dataRows")
-							// 			$("#main").append(tableRow)
+							function clickBox() {
+								var dataZero = [cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.average_cost_for_two, response.restaurants[0].restaurant.user_rating.aggregate_rating, response.restaurants[0].restaurant.user_rating.rating_text, response.restaurants[0].restaurant.user_rating.votes]
+								var dataOne = [cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.average_cost_for_two, response.restaurants[1].restaurant.user_rating.aggregate_rating, response.restaurants[1].restaurant.user_rating.rating_text, response.restaurants[1].restaurant.user_rating.votes]
+								var dataTwo = [cuisineRandom, response.restaurants[2].restaurant.name, response.restaurants[2].restaurant.average_cost_for_two, response.restaurants[2].restaurant.user_rating.aggregate_rating, response.restaurants[2].restaurant.user_rating.rating_text, response.restaurants[2].restaurant.user_rating.votes]
+									$(".click1").unbind("click").on("click", function () {
+										var tableRow = $("<tr>")
+										tableRow.attr("id", "row-" + rows)
+										tableRow.addClass("dataRows")
+										$("#main").append(tableRow)
 
-							// 				for (var i = 0; i < dataZero.length; i++) {
+											for (var i = 0; i < dataZero.length; i++) {
 										
-							// 					var tableData = $("<td>")
-							// 					tableData.text(dataZero[i])
+												var tableData = $("<td>")
+												tableData.text(dataZero[i])
 
-							// 				$("#row-" + rows).append(tableData)
+											$("#row-" + rows).append(tableData)
 
-							// 			}
+										}
 
-							// 			$("#restaurant-1").text("")
-							// 			$("#info-1").html("");
-							// 			rows++
+										$("#restaurant-1").text("")
+										$("#info-1").html("");
+										rows++
 									  
-							// 		})
+									})
 
-							// 		$(".click2").unbind("click").on("click", function () {
-							// 			var tableRow = $("<tr>")
-							// 			tableRow.attr("id", "row-" + rows)
-							// 			tableRow.addClass("dataRows")
-							// 			$("#main").append(tableRow)
+									$(".click2").unbind("click").on("click", function () {
+										var tableRow = $("<tr>")
+										tableRow.attr("id", "row-" + rows)
+										tableRow.addClass("dataRows")
+										$("#main").append(tableRow)
 
-							// 				for (var i = 0; i < dataOne.length; i++) {
+											for (var i = 0; i < dataOne.length; i++) {
 										
-							// 					var tableData = $("<td>")
-							// 					tableData.text(dataOne[i])
+												var tableData = $("<td>")
+												tableData.text(dataOne[i])
 
-							// 				$("#row-" + rows).append(tableData)
+											$("#row-" + rows).append(tableData)
 
-							// 			}
+										}
 
-							// 			$("#restaurant-2").text("")
-							// 			$("#info-2").html("");
-							// 			rows++
+										$("#restaurant-2").text("")
+										$("#info-2").html("");
+										rows++
 									  
-							// 		})
+									})
 
-							// 		$(".click3").unbind("click").on("click", function () {
-							// 			var tableRow = $("<tr>")
-							// 			tableRow.attr("id", "row-" + rows)
-							// 			tableRow.addClass("dataRows")
-							// 			$("#main").append(tableRow)
+									$(".click3").unbind("click").on("click", function () {
+										var tableRow = $("<tr>")
+										tableRow.attr("id", "row-" + rows)
+										tableRow.addClass("dataRows")
+										$("#main").append(tableRow)
 
-							// 				for (var i = 0; i < dataTwo.length; i++) {
+											for (var i = 0; i < dataTwo.length; i++) {
 										
-							// 					var tableData = $("<td>")
-							// 					tableData.text(dataTwo[i])
+												var tableData = $("<td>")
+												tableData.text(dataTwo[i])
 
-							// 				$("#row-" + rows).append(tableData)
+											$("#row-" + rows).append(tableData)
 
-							// 			}
+										}
 
-							// 			$("#restaurant-3").text("")
-							// 			$("#info-3").html("");
-							// 			rows++
+										$("#restaurant-3").text("")
+										$("#info-3").html("");
+										rows++
 									  
-							// 		})
-							// 	}
+									})
+								}
 
 
-						loading = false
+								loading = false
+							});
+
+						userLat = [];
+						userLong = [];
+
 					});
-
-				userLat = [];
-				userLong = [];
-				
-
-		});
-window.scrollTo(0,document.body.scrollHeight);
-loading = false;
-				}
-				
- 	})
-};
-
-			})
-
+				window.scrollTo(0,document.body.scrollHeight);
+				loading = false;
+				}				
+ 			})
 		};
+	})
+
+};
 
 	
 
