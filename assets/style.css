@@ -109,3 +109,13 @@ title {
 footer {
 	margin-top: 20px;
 }
+
+.click1:hover {
+	color:grey;
+}
+.click2:hover {
+	color:grey;
+}
+.click3:hover {
+	color:grey;
+}
