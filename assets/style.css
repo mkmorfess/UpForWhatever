@@ -1,11 +1,5 @@
-/*!
- * Start Bootstrap - Small Business (https://startbootstrap.com/template-overviews/small-business)
- * Copyright 2013-2017 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-small-business/blob/master/LICENSE)
- */
-
 body {
-  padding-top: 54px;
+   padding-top: 54px;
 }
 
 @media (min-width: 992px) {
@@ -15,7 +9,96 @@ padding-top: 56px;
   }
 }
 
+#mainDiv {
+	background: #FFD700;
+	width: 100%;
+	height: 100%;
+
+}
+
 #map {
 	height: 400px;
 	width: 800px;
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	box-shadow: 10px 10px 10px 10px;
+}
+
+#topHeader {
+	font-family: 'Rozha One', serif;
+	font-size: 60px;    
+}
+
+#random {
+	padding-bottom: 
+}
+
+#buttonText {
+	margin-bottom: 20px;
+}
+
+#cuisine {
+	font-family: 'Rozha One', serif;
+	margin-top: 60px;
+
+}
+
+#cuisineTitle {
+	font-family: 'Rozha One', serif;
+}
+
+#topButton {
+	text-align: center;
+	width: 100%;
+}
+
+#restaurant-1 {
+	font-family: 'Rozha One', serif;
+}
+
+#box1 {
+	border-style: solid;
+	border-color: #20B2AA;
+	text-align: center;
+	margin-top: 35px;
+}
+
+#restaurant-2 {
+	font-family: 'Rozha One', serif;
+}
+
+#box2 {
+	border-style: solid;
+	border-color: #20B2AA;
+	text-align: center;
+	margin-top: 35px;
+}
+
+
+#restaurant-3 {
+	font-family: 'Rozha One', serif;
+}
+
+#box3 {
+	border-style: solid;
+	border-color: #20B2AA;
+	text-align: center;
+	margin-top: 35px;
+}
+
+#button-1 {
+	margin-bottom: 20px;
+}
+
+#button-2 {
+	margin-bottom: 20px;
+}
+
+#button-3 {
+	margin-bottom: 20px;
+}
+
+footer {
+	margin-top: 20px;
 }
