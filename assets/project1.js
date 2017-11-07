@@ -167,8 +167,11 @@ function initMap() {
 
 								box++
 								border++
+								
 
 							}
+
+
 
 							if (response.restaurants.length === 0) {
 
@@ -225,7 +228,7 @@ function initMap() {
 
 									restaurantName.push(response.restaurants[i].restaurant.name)
 									restaurantAddress.push(response.restaurants[i].restaurant.location.address)
-									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong>")
+									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong><br><h5>Menu/Reviews: </h5><a href='" + response.restaurants[i].restaurant.url + "' target='_blank'> More Info </a>")
 									console.log(restaurantName);
 									console.log(restaurantAddress);
 
@@ -281,8 +284,7 @@ function initMap() {
 
 									restaurantName.push(response.restaurants[i].restaurant.name)
 									restaurantAddress.push(response.restaurants[i].restaurant.location.address)
-									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong>")
-
+									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong><br><h5>Menu/Reviews: </h5><a href='" + response.restaurants[i].restaurant.url + "' target='_blank'> More Info </a>")
 									console.log(restaurantName);
 									console.log(restaurantAddress);
 
@@ -319,8 +321,7 @@ function initMap() {
 
 									restaurantName.push(response.restaurants[i].restaurant.name)
 									restaurantAddress.push(response.restaurants[i].restaurant.location.address)
-									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong>")
-
+									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong><br><h5>Menu/Reviews: </h5><a href='" + response.restaurants[i].restaurant.url + "' target='_blank'> More Info </a>")
 									console.log(restaurantName);
 									console.log(restaurantAddress);
 
