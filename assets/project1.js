@@ -368,6 +368,7 @@ function initMap() {
 
 					});
 				window.scrollTo(0, 500);
+				//document.body.scrollHeight
 				loading = false;
 				}				
  			});
