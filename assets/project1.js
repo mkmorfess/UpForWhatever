@@ -367,7 +367,7 @@ function initMap() {
 						userLong = [];
 
 					});
-				window.scrollTo(0,document.body.scrollHeight);
+				window.scrollTo(0, 500);
 				loading = false;
 				}				
  			});
