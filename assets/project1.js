@@ -390,7 +390,8 @@ function initMap() {
 				tableRow.append(tableData);
 
 			}
-
+			window.scrollTo(0, document.body.scrollHeight);
+				//document.body.scrollHeight
 			userRemove();
 			dataZero = [];
 			
@@ -414,6 +415,7 @@ function initMap() {
 
 			}
 			userRemove();
+			window.scrollTo(0, document.body.scrollHeight);
 			dataOne = [];
 			rows++;
 		  
@@ -437,6 +439,7 @@ function initMap() {
 			
 			
 			userRemove();
+			window.scrollTo(0, document.body.scrollHeight);
 			dataTwo = [];
 			rows++;
 		  
