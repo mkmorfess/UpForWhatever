@@ -112,6 +112,7 @@ function initMap() {
 			var lat = [];
 			var long = [];
 			var restaurants = 1;
+			var info;
 			
 
 		// this first ajax gets the cuisine list from zomato and pushes it into the array of cuisineList
@@ -389,7 +390,7 @@ function initMap() {
 
 			}
 
-			
+			userRemove();
 			dataZero = [];
 			
 			rows++;
@@ -411,7 +412,7 @@ function initMap() {
 				tableRow.append(tableData);
 
 			}
-			
+			userRemove();
 			dataOne = [];
 			rows++;
 		  
@@ -434,7 +435,7 @@ function initMap() {
 			}
 			
 			
-			
+			userRemove();
 			dataTwo = [];
 			rows++;
 		  
@@ -443,7 +444,8 @@ function initMap() {
 }
 
 
-$("tr").off().on("click", function(){
+function userRemove () {
+	$(".userRemove").off().on("click", function(){
 
 			console.log(this);
 
@@ -461,6 +463,9 @@ $("tr").off().on("click", function(){
 			}
 
 		});
+}
+
+userRemove();
 
 	
 

@@ -34,10 +34,10 @@
 
        <div class="col-lg-4" id="topButton">
           <h1 class="animated jello" id="topHeader">Up For Whatever?</h1>
-          <h4 id="buttonText">Type in your location below to find a random cuisine near you.</h4>
+          <h3 id="buttonText">Type in your location below to find a random cuisine near you.</h3>
           <form id="random">
-            <h4>Your Location:<h4> <input type="text" name="address" id="input">
-            <h4>How Far Are You Willing To Go? (km)</h4><input type="number" name="distance" id="distance">
+            <h4>Your Location: *<h4> <input type="text" name="address" id="input" placeholder="Ex: Address/City/State/Zip" class="form-control">
+            <h4>How Far Are You Willing To Go? (km)</h4><input type="number" min="0" name="distance" class="form-control" id="distance" placeholder="Ex: 20">
               <div id="error"></div>            
               <br>
               <input type="submit" value="Let's Go!" class="btn btn-primary" id="submit">
@@ -58,7 +58,7 @@
       <!-- Random cuisine choices / bottom of page -->
       <div class="card text-white bg-secondary my-4 text-center">
         <div class="card-body">
-        <h1 id="cuisineTitle">Cuisine choices: <span class="text-white m-0" id="cuisine"></span></h1>
+        <h1 id="cuisineTitle">Cuisine Chosen: <span class="text-white m-0" id="cuisine"></span></h1>
         </div>
         <div>
         Not Happy With Choices? <a href="#">Try Again</a>
@@ -120,14 +120,6 @@
                 <th>Rating</th>
                 <th>Rank</th>
                 <th>Number Of Votes</th>
-              </tr>
-              <tr class="userRemove">
-                <td>Stuff</td>
-                <td>Testing</td>
-                <td>More Stuff</td>
-                <td>Stuff</td>
-                <td>Testing</td>
-                <td>More Stuff</td>
               </tr>
             </table>
           </div>
