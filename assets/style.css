@@ -23,9 +23,7 @@ title {
 #map {
 	
 	height: 600px;
-	width: 1200px;
-	margin-left: 225px;
-	margin-right: 225px;
+	width: 100%;
 	margin-top: 70px;
 	margin-bottom: 20px;
 	box-shadow: 10px 10px 10px 10px;
@@ -138,4 +136,5 @@ footer {
 
 table {
 	box-shadow: 10px 10px 10px 10px;
+	width: 100%;
 }
