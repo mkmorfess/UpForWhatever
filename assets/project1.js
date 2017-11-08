@@ -447,10 +447,6 @@ function initMap() {
 function userRemove () {
 	$(".userRemove").off().on("click", function(){
 
-			console.log(this);
-
-			alert("Is this working?");
-
 			var remove = confirm("Do you want to remove?");
 
 			if (remove === true) {

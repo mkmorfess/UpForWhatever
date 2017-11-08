@@ -21,10 +21,10 @@ title {
 }
 
 #map {
+	margin-left: 225px;
 	height: 600px;
-	width: 800px;
-	width: 100%;
-	margin-top: 20px;
+	width:1200px;
+	margin-top: 70px;
 	margin-bottom: 20px;
 	box-shadow: 10px 10px 10px 10px;
 }
