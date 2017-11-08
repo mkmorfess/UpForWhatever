@@ -110,5 +110,20 @@ h4 {
 }
 
 footer {
-	margin-top: 20px;
+	padding: 25px;
+	background-color: darkgrey;
+}
+
+.click1:hover {
+	color:grey;
+}
+.click2:hover {
+	color:grey;
+}
+.click3:hover {
+	color:grey;
+}
+
+.userRemove:hover {
+	background-color:grey;
 }

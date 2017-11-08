@@ -5,6 +5,10 @@ var markers = [];
 var contentString = [];
 var infowindows = [];
 var loading = false;
+var rows = 1;
+var dataZero = [];
+var dataOne = [];
+var dataTwo = [];
 
 
 //this function initializes the google map on the screen
@@ -68,6 +72,7 @@ function initMap() {
 	var userLong = [];
 	var box = 1;
 	var border = 1;
+
 
 
 	$("#random").submit(function(event) {
@@ -136,7 +141,7 @@ function initMap() {
 				var cuisineRandom = cuisineList[Math.floor(Math.random() * cuisineList.length)];
 				// .. then it adds the text of whatever cuisine it chose to the HTML page.. entity_type=city&
 				$("#cuisine").text(cuisineRandom)
-				var queryURL2 = "https://developers.zomato.com/api/v2.1/search?q=" + cuisineRandom + "&count=3&lat=" + userLat + "&lon=" + userLong + "&radius=" + userDistance + "000&sort=real_distance&sort=rating"
+				var queryURL2 = "https://developers.zomato.com/api/v2.1/search?q=" + cuisineRandom + "&radius=" + userDistance + "000&count=3&lat=" + userLat + "&lon=" + userLong + "&sort=real_distance&sort=rating"
 				lat = [];
 				long = [];
 				restaurantName = [];
@@ -146,6 +151,9 @@ function initMap() {
 				restaurants = 1;
 				info = 1;
 				box = 1;
+				dataZero = [];
+				dataOne = [];
+				dataTwo = [];
 				// console.log(queryURL2);
 
 				deleteMarkers();
@@ -233,13 +241,14 @@ function initMap() {
 									restaurantName.push(response.restaurants[i].restaurant.name)
 									restaurantAddress.push(response.restaurants[i].restaurant.location.address)
 									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong><br><h5>Menu/Reviews: </h5><a href='" + response.restaurants[i].restaurant.url + "' target='_blank'> More Info </a>")
-									console.log(restaurantName);
-									console.log(restaurantAddress);
+									// console.log(restaurantName);
+									// console.log(restaurantAddress);
 
 									//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
 									addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
 
 								}
+								dataOne.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.average_cost_for_two, response.restaurants[0].restaurant.user_rating.aggregate_rating, response.restaurants[0].restaurant.user_rating.rating_text, response.restaurants[0].restaurant.user_rating.votes)
 							}
 
 							else if (response.restaurants.length === 2) {
@@ -289,13 +298,16 @@ function initMap() {
 									restaurantName.push(response.restaurants[i].restaurant.name)
 									restaurantAddress.push(response.restaurants[i].restaurant.location.address)
 									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong><br><h5>Menu/Reviews: </h5><a href='" + response.restaurants[i].restaurant.url + "' target='_blank'> More Info </a>")
-									console.log(restaurantName);
-									console.log(restaurantAddress);
-
+									// console.log(restaurantName);
+									// console.log(restaurantAddress);
+									
 									//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
 									addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
 									}
 								}
+
+								dataZero.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.average_cost_for_two, response.restaurants[0].restaurant.user_rating.aggregate_rating, response.restaurants[0].restaurant.user_rating.rating_text, response.restaurants[0].restaurant.user_rating.votes)
+								dataTwo.push(cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.average_cost_for_two, response.restaurants[1].restaurant.user_rating.aggregate_rating, response.restaurants[1].restaurant.user_rating.rating_text, response.restaurants[1].restaurant.user_rating.votes)
 							}
 							else {
 
@@ -322,91 +334,29 @@ function initMap() {
 
 									// console.log(lat);
 									// console.log(long);
-
+									
 									restaurantName.push(response.restaurants[i].restaurant.name)
 									restaurantAddress.push(response.restaurants[i].restaurant.location.address)
 									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong><br><h5>Menu/Reviews: </h5><a href='" + response.restaurants[i].restaurant.url + "' target='_blank'> More Info </a>")
-									console.log(restaurantName);
-									console.log(restaurantAddress);
+									// console.log(restaurantName);
+									// console.log(restaurantAddress);
 
 									//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
 									addMarker({lat:lat[i], lng:long[i]}, infowindows[i])
 									// console.log(markers);
-									console.log(contentString);
+									// console.log(contentString);
 									restaurants++
 									info++
 								}
-							}
 
+									dataZero.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.average_cost_for_two, response.restaurants[0].restaurant.user_rating.aggregate_rating, response.restaurants[0].restaurant.user_rating.rating_text, response.restaurants[0].restaurant.user_rating.votes)
+									dataOne.push(cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.average_cost_for_two, response.restaurants[1].restaurant.user_rating.aggregate_rating, response.restaurants[1].restaurant.user_rating.rating_text, response.restaurants[1].restaurant.user_rating.votes)
+									dataTwo.push(cuisineRandom, response.restaurants[2].restaurant.name, response.restaurants[2].restaurant.average_cost_for_two, response.restaurants[2].restaurant.user_rating.aggregate_rating, response.restaurants[2].restaurant.user_rating.rating_text, response.restaurants[2].restaurant.user_rating.votes)
 
-
-							function clickBox() {
-								var dataZero = [cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.average_cost_for_two, response.restaurants[0].restaurant.user_rating.aggregate_rating, response.restaurants[0].restaurant.user_rating.rating_text, response.restaurants[0].restaurant.user_rating.votes]
-								var dataOne = [cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.average_cost_for_two, response.restaurants[1].restaurant.user_rating.aggregate_rating, response.restaurants[1].restaurant.user_rating.rating_text, response.restaurants[1].restaurant.user_rating.votes]
-								var dataTwo = [cuisineRandom, response.restaurants[2].restaurant.name, response.restaurants[2].restaurant.average_cost_for_two, response.restaurants[2].restaurant.user_rating.aggregate_rating, response.restaurants[2].restaurant.user_rating.rating_text, response.restaurants[2].restaurant.user_rating.votes]
-									$(".click1").unbind("click").on("click", function () {
-										var tableRow = $("<tr>")
-										tableRow.attr("id", "row-" + rows)
-										tableRow.addClass("dataRows")
-										$("#main").append(tableRow)
-
-											for (var i = 0; i < dataZero.length; i++) {
-										
-												var tableData = $("<td>")
-												tableData.text(dataZero[i])
-
-											$("#row-" + rows).append(tableData)
-
-										}
-
-										$("#restaurant-1").text("")
-										$("#info-1").html("");
-										rows++
-									  
-									})
-
-									$(".click2").unbind("click").on("click", function () {
-										var tableRow = $("<tr>")
-										tableRow.attr("id", "row-" + rows)
-										tableRow.addClass("dataRows")
-										$("#main").append(tableRow)
-
-											for (var i = 0; i < dataOne.length; i++) {
-										
-												var tableData = $("<td>")
-												tableData.text(dataOne[i])
-
-											$("#row-" + rows).append(tableData)
-
-										}
-
-										$("#restaurant-2").text("")
-										$("#info-2").html("");
-										rows++
-									  
-									})
-
-									$(".click3").unbind("click").on("click", function () {
-										var tableRow = $("<tr>")
-										tableRow.attr("id", "row-" + rows)
-										tableRow.addClass("dataRows")
-										$("#main").append(tableRow)
-
-											for (var i = 0; i < dataTwo.length; i++) {
-										
-												var tableData = $("<td>")
-												tableData.text(dataTwo[i])
-
-											$("#row-" + rows).append(tableData)
-
-										}
-
-										$("#restaurant-3").text("")
-										$("#info-3").html("");
-										rows++
-									  
-									})
-								}
+									// console.log(dataZero);
+									// console.log(dataOne);
+									// console.log(dataTwo);															
+							}				
 
 
 								loading = false
@@ -423,7 +373,94 @@ function initMap() {
 		};
 	})
 
+		$(".click1").unbind("click").on("click", function () {
+			var tableRow = $("<tr>")
+			// tableRow.attr("data-rest", "rest" + rows)
+			// tableRow.attr("id", "row-" + rows)
+			tableRow.addClass("userRemove")
+			$("#main").append(tableRow)
+
+				for (var i = 0; i < dataZero.length; i++) {
+			
+					var tableData = $("<td>")
+					tableData.html(dataZero[i])
+
+				tableRow.append(tableData)
+
+			}
+
+			
+			dataZero = [];
+			
+			rows++
+		  
+		})
+
+		$(".click2").unbind("click").on("click", function () {
+			var tableRow = $("<tr>")
+			// tableRow.attr("data-rest", "rest" + rows)
+			// tableRow.attr("id", "row-" + rows)
+			tableRow.addClass("userRemove")
+			$("#main").append(tableRow)
+
+				for (var i = 0; i < dataOne.length; i++) {
+			
+					var tableData = $("<td>")
+					tableData.text(dataOne[i])
+
+				tableRow.append(tableData)
+
+			}
+			
+			dataOne = [];
+			rows++
+		  
+		})
+
+		$(".click3").unbind("click").on("click", function () {
+			var tableRow = $("<tr>")
+			// tableRow.attr("data-rest", "rest" + rows)
+			// tableRow.attr("id", "row-" + rows)
+			tableRow.addClass("userRemove")
+			$("#main").append(tableRow)
+
+				for (var i = 0; i < dataTwo.length; i++) {
+			
+					var tableData = $("<td>")
+					tableData.html(dataTwo[i])
+
+				tableRow.append(tableData)
+
+			}
+			
+			
+			
+			dataTwo = [];
+			rows++
+		  
+		})	
+ 	
 };
+
+
+$("tr").off().on("click", function(){
+
+			console.log(this)
+
+			alert("Is this working?");
+
+			var remove = confirm("Do you want to remove?");
+
+			if (remove === true) {
+
+				$(this).remove();
+			}
+
+			else {
+				return false;
+			}
+
+		});
 
 	
 
