@@ -264,7 +264,7 @@ function initMap() {
 									addMarker({lat:lat[i], lng:long[i]}, infowindows[i]);
 
 								}
-								dataOne.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.average_cost_for_two, response.restaurants[0].restaurant.user_rating.aggregate_rating, response.restaurants[0].restaurant.user_rating.rating_text, response.restaurants[0].restaurant.user_rating.votes);
+								dataOne.push(cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[1].restaurant.url + "'>More Info</a>");
 							}
 
 							else if (response.restaurants.length === 2) {
@@ -322,8 +322,8 @@ function initMap() {
 									}
 								}
 
-								dataZero.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.average_cost_for_two, response.restaurants[0].restaurant.user_rating.aggregate_rating, response.restaurants[0].restaurant.user_rating.rating_text, response.restaurants[0].restaurant.user_rating.votes);
-								dataTwo.push(cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.average_cost_for_two, response.restaurants[1].restaurant.user_rating.aggregate_rating, response.restaurants[1].restaurant.user_rating.rating_text, response.restaurants[1].restaurant.user_rating.votes);
+								dataZero.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[0].restaurant.url + "'>More Info</a>");
+								dataTwo.push(cuisineRandom, response.restaurants[2].restaurant.name, response.restaurants[2].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[2].restaurant.url + "'>More Info</a>");
 							}
 							else {
 
@@ -365,9 +365,9 @@ function initMap() {
 									info++;
 								}
 
-									dataZero.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.average_cost_for_two, response.restaurants[0].restaurant.user_rating.aggregate_rating, response.restaurants[0].restaurant.user_rating.rating_text, response.restaurants[0].restaurant.user_rating.votes);
-									dataOne.push(cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.average_cost_for_two, response.restaurants[1].restaurant.user_rating.aggregate_rating, response.restaurants[1].restaurant.user_rating.rating_text, response.restaurants[1].restaurant.user_rating.votes);
-									dataTwo.push(cuisineRandom, response.restaurants[2].restaurant.name, response.restaurants[2].restaurant.average_cost_for_two, response.restaurants[2].restaurant.user_rating.aggregate_rating, response.restaurants[2].restaurant.user_rating.rating_text, response.restaurants[2].restaurant.user_rating.votes);
+									dataZero.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[0].restaurant.url + "'>More Info</a>");
+									dataOne.push(cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[1].restaurant.url + "'>More Info</a>");
+									dataTwo.push(cuisineRandom, response.restaurants[2].restaurant.name, response.restaurants[2].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[2].restaurant.url + "'>More Info</a>");
 
 									// console.log(dataZero);
 									// console.log(dataOne);
@@ -399,10 +399,11 @@ function initMap() {
 				database.ref().push({
 					Cuisine: dataZero[0],
 					Restaurant_Name: dataZero[1],
-					Average: dataZero[2],
-					Rating: dataZero[3],
-					Rank: dataZero[4],
-					Votes: dataZero[5]
+					Rank: dataZero[2],
+					MoreInfo: dataZero[3]
+					// Rating: dataZero[3],
+					// Rank: dataZero[4],
+					// Votes: dataZero[5]
 				});
 			}
 
@@ -423,10 +424,11 @@ function initMap() {
 				database.ref().push({
 					Cuisine: dataOne[0],
 					Restaurant_Name: dataOne[1],
-					Average: dataOne[2],
-					Rating: dataOne[3],
-					Rank: dataOne[4],
-					Votes: dataOne[5]
+					Rank: dataOne[2],
+					MoreInfo: dataOne[3]
+					// Rating: dataOne[3],
+					// Rank: dataOne[4],
+					// Votes: dataOne[5]
 				});
 			}
 
@@ -446,10 +448,11 @@ function initMap() {
 				database.ref().push({
 					Cuisine: dataTwo[0],
 					Restaurant_Name: dataTwo[1],
-					Average: dataTwo[2],
-					Rating: dataTwo[3],
-					Rank: dataTwo[4],
-					Votes: dataTwo[5]
+					Rank: dataTwo[2],
+					MoreInfo: dataTwo[3]
+					// Rating: dataTwo[3],
+					// Rank: dataTwo[4],
+					// Votes: dataTwo[5]
 				});
 			}
 			
@@ -463,18 +466,19 @@ function initMap() {
 
 		database.ref().on("child_added", function(snapshot) { 
 
-			input = [snapshot.val().Cuisine, snapshot.val().Restaurant_Name, snapshot.val().Average, snapshot.val().Rating, snapshot.val().Rank, snapshot.val().Votes];
+			input = [snapshot.val().Cuisine, snapshot.val().Restaurant_Name, snapshot.val().Rank, snapshot.val().MoreInfo, "<button class='userRemove close text-center'>Remove</button>"];
 
 			var tableRow = $("<tr>");
 			tableRow.attr("data-rest", "rest" + rows)
 			tableRow.attr("id", "row-" + rows)
-			tableRow.addClass("userRemove");
+			tableRow.addClass("dataInRows");
 			$("#main").append(tableRow);
 
-				for (var i = 0; i < 6; i++) {
+				for (var i = 0; i < 5; i++) {
 
 					var tableData = $("<td>");
-					tableData.text(input[i]);
+					// tableData.addClass("text-center")
+					tableData.html(input[i]);
 
 					tableRow.append(tableData);
 
@@ -492,18 +496,18 @@ var Restaurant_Name;
 function userRemove () {
 	$(".userRemove").off().on("click", function(){
 
-			var remove = confirm("Do you want to remove this restaurant from your list?");
+			var remove = confirm("Do you want to delete from your favorites?");
 
 			if (remove === true) {
 
-				var restaurantsRef = firebase.database().ref('upforwhatever-ff19e');
-				var query = restaurantsRef.orderByChild('Restaurant_Name').equalTo(Restaurant_Name);
-				query.on('child_added', function(snapshot) {
-					snapshot.ref.remove();
-				})
+				// var restaurantsRef = firebase.database().ref('upforwhatever-ff19e');
+				// var query = restaurantsRef.orderByChild('Restaurant_Name').equalTo(Restaurant_Name);
+				// query.on('child_added', function(snapshot) {
+				// 	snapshot.ref.remove();
+				// })
 
 
-				$(this).remove();
+				$(this).closest('tr').remove();
 			}
 
 			else {

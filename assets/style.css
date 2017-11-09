@@ -22,12 +22,15 @@ title {
 }
 
 
+
 #table {
 	/*background-color: #FAFAD2;*/
 	background-image: url("box1.jpg");
 	color: black; 
 	text-shadow: 2px 2px white; 
 	font-size: 20px;
+	border-style: solid;
+	border-color: #F0F8FF;
 }
 
 #map {
@@ -37,6 +40,7 @@ title {
 	margin-top: 70px;
 	margin-bottom: 20px;
 	box-shadow: 10px 10px 10px 10px;
+
 }
 
 #topHeader {
@@ -159,8 +163,8 @@ footer {
 	color:grey;
 }
 
-.userRemove:hover {
-	background-color:grey;
+.dataInRows:hover {
+	background-color:lightgrey;
 }
 
 table {
