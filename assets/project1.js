@@ -415,7 +415,7 @@ function initMap() {
 
 			}
 			userRemove();
-			window.scrollTo(0, document.body.scrollHeight);
+			// window.scrollTo(0, document.body.scrollHeight);
 			dataOne = [];
 			rows++;
 		  
