@@ -16,7 +16,7 @@ title {
 	animation: bounce;
 }
 
-h4 {
+.userType {
 	color: white;
 	text-shadow: 2px 2px #000000; 
 }
@@ -70,7 +70,7 @@ h4 {
 	width: 100%;
 }
 
-a {
+.link {
 	color: white;
 	text-shadow: 2px 2px #000000; 
 	text-decoration: underline;
