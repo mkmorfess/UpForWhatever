@@ -133,7 +133,9 @@ title {
 
 footer {
 	padding: 25px;
-	/*background-color: #FFD700;*/
+	color: white;
+	text-shadow: 2px 2px #000000; 
+	font-size: 16px;
 }
 
 .click1:hover {
