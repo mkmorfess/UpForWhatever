@@ -23,8 +23,11 @@ title {
 
 
 #table {
-	background-color: #FAFAD2;
+	/*background-color: #FAFAD2;*/
+	background-image: url("box1.jpg");
 	color: black; 
+	text-shadow: 2px 2px white; 
+	font-size: 20px;
 }
 
 #map {
@@ -47,7 +50,7 @@ title {
 	padding-bottom:
 }
 
-#buttonText {
+.buttonText {
 	margin-bottom: 20px;
 	color: white;
 	text-shadow: 2px 2px #000000; 
@@ -83,10 +86,12 @@ title {
 .box1 {
 	border-style: solid;
 	border-color: #F0F8FF;
-	background-color: #FAFAD2;
+	/*background-color: #FAFAD2;*/
+	background-image: url("box1.jpg");
 	text-align: center;
 	margin-top: 35px;
 	margin-bottom: 35px;
+	text-shadow: 2px 2px white; 
 	box-shadow: 10px 10px 10px 10px;
 }
 
@@ -97,10 +102,12 @@ title {
 .box2 {
 	border-style: solid;
 	border-color: #F0F8FF;
-	background-color: #FAFAD2;
+	/*background-color: #FAFAD2;*/
+	background-image: url("box1.jpg");
 	text-align: center;
 	margin-top: 35px;
 	margin-bottom: 35px;
+	text-shadow: 2px 2px white; 
 	box-shadow: 10px 10px 10px 10px;
 }
 
@@ -112,10 +119,12 @@ title {
 .box3 {
 	border-style: solid;
 	border-color: #F0F8FF;
-	background-color: #FAFAD2;
+	/*background-color: #FAFAD2;*/
+	background-image: url("box1.jpg");
 	text-align: center;
 	margin-top: 35px;
 	margin-bottom: 35px;
+	text-shadow: 2px 2px white; 
 	box-shadow: 10px 10px 10px 10px;
 }
 
@@ -132,10 +141,12 @@ title {
 }
 
 footer {
+	background-image: url("box1.jpg");
 	padding: 25px;
-	color: white;
-	text-shadow: 2px 2px #000000; 
+	color: black;
+	text-shadow: 2px 2px white; 
 	font-size: 16px;
+	border-top: 1px black solid;
 }
 
 .click1:hover {

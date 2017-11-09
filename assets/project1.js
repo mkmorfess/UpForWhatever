@@ -41,6 +41,8 @@ function initMap() {
 		marker.addListener('click', function() {
           infowindow.open(map, marker);
         });
+
+        // $(".moreInfo").on("click")
 	}
 
 	//function that goes through the markers array - helps to delete markers
@@ -64,6 +66,19 @@ function initMap() {
 		markers = [];
 	}
 	
+	// Initialize Firebase
+	var config = {
+	apiKey: "AIzaSyCTCocVgeQd6pAtW5uB39sORxD4ofZ43FY",
+	authDomain: "upforwhatever-ff19e.firebaseapp.com",
+	databaseURL: "https://upforwhatever-ff19e.firebaseio.com",
+	projectId: "upforwhatever-ff19e",
+	storageBucket: "",
+	messagingSenderId: "631460305340"
+	};
+	firebase.initializeApp(config);
+
+	var database = firebase.database();
+
 
 	// API Website https://developers.zomato.com/documentation#!/restaurant/search
 
@@ -95,10 +110,10 @@ function initMap() {
 			 			map.setCenter(results[0].geometry.location);
 			 			userLat.push(results[0].geometry.location.lat());
 			 			userLong.push(results[0].geometry.location.lng());
-			 			console.log(results[0].geometry.location.lat());
-			 			console.log(results[0].geometry.location.lng());
-			 			console.log(userLat);
-			 			console.log(userLong);
+			 			// console.log(results[0].geometry.location.lat());
+			 			// console.log(results[0].geometry.location.lng());
+			 			// console.log(userLat);
+			 			// console.log(userLong);
 			 			}
 				else {
 					$("#error").html("<br>Geocode was not successful for the following reason: " + status + " Please try again");
@@ -376,84 +391,117 @@ function initMap() {
 	});
 
 		$(".click1").unbind("click").on("click", function () {
-			var tableRow = $("<tr>");
-			// tableRow.attr("data-rest", "rest" + rows)
-			// tableRow.attr("id", "row-" + rows)
-			tableRow.addClass("userRemove");
-			$("#main").append(tableRow);
 
-				for (i = 0; i < dataZero.length; i++) {
-			
-					var tableData = $("<td>");
-					tableData.html(dataZero[i]);
-
-				tableRow.append(tableData);
-
+			if (dataZero.length === 0) {
+				return false;
 			}
+			else {
+				database.ref().push({
+					Cuisine: dataZero[0],
+					Restaurant_Name: dataZero[1],
+					Average: dataZero[2],
+					Rating: dataZero[3],
+					Rank: dataZero[4],
+					Votes: dataZero[5]
+				});
+			}
+
 			// window.scrollTo(0, document.body.scrollHeight);
 				//document.body.scrollHeight
 			userRemove();
 			dataZero = [];
 			
-			rows++;
 		  
 		});
 
 		$(".click2").unbind("click").on("click", function () {
-			var tableRow = $("<tr>");
-			// tableRow.attr("data-rest", "rest" + rows)
-			// tableRow.attr("id", "row-" + rows)
-			tableRow.addClass("userRemove");
-			$("#main").append(tableRow);
 
-				for (i = 0; i < dataOne.length; i++) {
-			
-					var tableData = $("<td>");
-					tableData.text(dataOne[i]);
-
-				tableRow.append(tableData);
-
+			if (dataOne.length === 0) {
+				return false;
 			}
+			else {
+				database.ref().push({
+					Cuisine: dataOne[0],
+					Restaurant_Name: dataOne[1],
+					Average: dataOne[2],
+					Rating: dataOne[3],
+					Rank: dataOne[4],
+					Votes: dataOne[5]
+				});
+			}
+
 			userRemove();
 			// window.scrollTo(0, document.body.scrollHeight);
 			dataOne = [];
-			rows++;
+			
 		  
 		});
 
 		$(".click3").unbind("click").on("click", function () {
-			var tableRow = $("<tr>");
-			// tableRow.attr("data-rest", "rest" + rows)
-			// tableRow.attr("id", "row-" + rows)
-			tableRow.addClass("userRemove");
-			$("#main").append(tableRow);
 
-				for (i = 0; i < dataTwo.length; i++) {
-			
-					var tableData = $("<td>");
-					tableData.html(dataTwo[i]);
-
-				tableRow.append(tableData);
-
+			if (dataTwo.length === 0) {
+				return false;
 			}
-			
+			else {
+				database.ref().push({
+					Cuisine: dataTwo[0],
+					Restaurant_Name: dataTwo[1],
+					Average: dataTwo[2],
+					Rating: dataTwo[3],
+					Rank: dataTwo[4],
+					Votes: dataTwo[5]
+				});
+			}
 			
 			userRemove();
 			// window.scrollTo(0, document.body.scrollHeight);
 			dataTwo = [];
-			rows++;
+			
 		  
 		});
+
+
+		database.ref().on("child_added", function(snapshot) { 
+
+			input = [snapshot.val().Cuisine, snapshot.val().Restaurant_Name, snapshot.val().Average, snapshot.val().Rating, snapshot.val().Rank, snapshot.val().Votes];
+
+			var tableRow = $("<tr>");
+			tableRow.attr("data-rest", "rest" + rows)
+			tableRow.attr("id", "row-" + rows)
+			tableRow.addClass("userRemove");
+			$("#main").append(tableRow);
+
+				for (var i = 0; i < 6; i++) {
+
+					var tableData = $("<td>");
+					tableData.text(input[i]);
+
+					tableRow.append(tableData);
+
+				}
+
+				rows++;
+				userRemove();
+
+		})
  	
 }
 
+var Restaurant_Name;
 
 function userRemove () {
 	$(".userRemove").off().on("click", function(){
 
-			var remove = confirm("Do you want to remove?");
+			var remove = confirm("Do you want to remove this restaurant from your list?");
 
 			if (remove === true) {
+
+				var restaurantsRef = firebase.database().ref('upforwhatever-ff19e');
+				var query = restaurantsRef.orderByChild('Restaurant_Name').equalTo(Restaurant_Name);
+				query.on('child_added', function(snapshot) {
+					snapshot.ref.remove();
+				})
+
 
 				$(this).remove();
 			}
