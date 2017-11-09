@@ -211,14 +211,14 @@ function initMap() {
 
 									$("#info-" + info).html("");
 
-									$(".box" + box).removeClass();
 
 									info++;
 									restaurants++;
 									box++;
 					
 								}
-
+								$(".box" + 1).removeClass();
+								$(".box" + 3).removeClass();
 								$("#restaurant-" + 2).text("No Restaurants Found. Try Again!");
 
 							}
@@ -264,46 +264,46 @@ function initMap() {
 									addMarker({lat:lat[i], lng:long[i]}, infowindows[i]);
 
 								}
-								dataOne.push(cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[1].restaurant.url + "'>More Info</a>");
+								dataOne.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[0].restaurant.url + "'>More Info</a>");
 							}
 
 							else if (response.restaurants.length === 2) {
 
-								restaurants = 2;
-								info = 2;
-								box = 2;
+								// restaurants = 2;
+								// info = 2;
+								// box = 2;
+
+								
+
+									$("#restaurant-" + 2).text("");
+									$(".box" + 2).removeClass();
+
+									$("#info-" + 2).html("");
+
+									// info++;
+									// restaurants++;
+									// box++;
+
+								
+
+								// restaurants = 1;
+								// info = 1;
+								// box = 1;
 
 								for (i = 0; i < 1; i++) {
 
-									$("#restaurant-" + restaurants).text("");
-									$(".box" + box).removeClass();
+								// 	if (i === 1) {
+								// 		restaurants++;
+								// 		info++;
+								// 		box++;
+								// 	}
 
-									$("#info-" + info).html("");
+									// else {
 
-									info++;
-									restaurants++;
-									box++;
-
-								}
-
-								restaurants = 1;
-								info = 1;
-								box = 1;
-
-								for (i = 0; i < 2; i++) {
-
-									if (i === 1) {
-										restaurants++;
-										info++;
-										box++;
-									}
-
-									else {
-
-									$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name);
+									$("#restaurant-" + 1).text(response.restaurants[i].restaurant.name);
 
 					
-									$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
+									$("#info-" + 1).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
 									"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
 									"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
 									"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
@@ -320,10 +320,42 @@ function initMap() {
 									//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
 									addMarker({lat:lat[i], lng:long[i]}, infowindows[i]);
 									}
-								}
+								// }
+
+										for (i = 1; i < 2; i++) {
+
+								// 	if (i === 1) {
+								// 		restaurants++;
+								// 		info++;
+								// 		box++;
+								// 	}
+
+									// else {
+
+									$("#restaurant-" + 3).text(response.restaurants[i].restaurant.name);
+
+					
+									$("#info-" + 3).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
+									"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
+									"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
+									"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
+
+									lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
+									long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
+
+									restaurantName.push(response.restaurants[i].restaurant.name);
+									restaurantAddress.push(response.restaurants[i].restaurant.location.address);
+									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong><br><h5>Menu/Reviews: </h5><a href='" + response.restaurants[i].restaurant.url + "' target='_blank'> More Info </a>");
+									// console.log(restaurantName);
+									// console.log(restaurantAddress);
+									
+									//then the add marker function calls from the lat/long array to plug in the lat and long and creates the marker..
+									addMarker({lat:lat[i], lng:long[i]}, infowindows[i]);
+									}
+								// }
 
 								dataZero.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[0].restaurant.url + "'>More Info</a>");
-								dataTwo.push(cuisineRandom, response.restaurants[2].restaurant.name, response.restaurants[2].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[2].restaurant.url + "'>More Info</a>");
+								dataTwo.push(cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[1].restaurant.url + "'>More Info</a>");
 							}
 							else {
 
