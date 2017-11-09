@@ -73,6 +73,7 @@ h4 {
 a {
 	color: white;
 	text-shadow: 2px 2px #000000; 
+	text-decoration: underline;
 }
 
 #restaurant-1 {
