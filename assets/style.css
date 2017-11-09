@@ -1,5 +1,5 @@
 body {
-  font-family: 'Slackey', cursive;
+  /*font-family: 'Slackey', cursive;*/
 }
 
 @media (min-width: 992px) {
@@ -20,6 +20,11 @@ title {
 
 }
 
+#table {
+	background-color: #FAFAD2;
+	color: black; 
+}
+
 #map {
 	
 	height: 600px;
@@ -32,11 +37,8 @@ title {
 #topHeader {
 	font-family: 'Rozha One', serif;
 	font-size: 60px;    
-	/*font-family: 'Just Me Again Down Here', cursive;*/	
 }
-h4 {
-	font-family: 'Peralta', cursive;
-}
+
 #random {
 	padding-bottom: 
 }
@@ -65,9 +67,9 @@ h4 {
 }
 
 .box1 {
-	background-color: bisque;
+	background-color: #FAFAD2;
 	border-style: solid;
-	border-color: #20B2AA;
+	border-color: #F0F8FF;
 	text-align: center;
 	margin-top: 35px;
 	margin-bottom: 35px;
@@ -79,9 +81,9 @@ h4 {
 }
 
 .box2 {
-	background-color: bisque;
+	background-color: #FAFAD2;
 	border-style: solid;
-	border-color: #20B2AA;
+	border-color: #F0F8FF;
 	text-align: center;
 	margin-top: 35px;
 	margin-bottom: 35px;
@@ -94,9 +96,9 @@ h4 {
 }
 
 .box3 {
-	background-color: bisque;
+	background-color: #FAFAD2;
 	border-style: solid;
-	border-color: #20B2AA;
+	border-color: #F0F8FF;
 	text-align: center;
 	margin-top: 35px;
 	margin-bottom: 35px;
@@ -117,7 +119,7 @@ h4 {
 
 footer {
 	padding: 25px;
-	background-color: darkgrey;
+	background-color: #FFD700;
 }
 
 .click1:hover {
