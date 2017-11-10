@@ -499,9 +499,9 @@ function initMap() {
 		database.ref().on("child_added", function(snapshot) { 
 
 			input = [snapshot.val().Cuisine, snapshot.val().Restaurant_Name, snapshot.val().Rank, snapshot.val().MoreInfo, "<button class='userRemove close text-center'>Remove</button>"];
-
+			var key = snapshot.key;
 			var tableRow = $("<tr>");
-			tableRow.attr("data-rest", "rest" + rows)
+			tableRow.attr("data-key", key)
 			tableRow.attr("id", "row-" + rows)
 			tableRow.addClass("dataInRows");
 			$("#main").append(tableRow);
@@ -518,10 +518,12 @@ function initMap() {
 
 				rows++;
 				userRemove();
-
+				console.log(key)
 		})
  	
 }
+
+
 
 var Restaurant_Name;
 
@@ -532,11 +534,9 @@ function userRemove () {
 
 			if (remove === true) {
 
-				// var restaurantsRef = firebase.database().ref('upforwhatever-ff19e');
-				// var query = restaurantsRef.orderByChild('Restaurant_Name').equalTo(Restaurant_Name);
-				// query.on('child_added', function(snapshot) {
-				// 	snapshot.ref.remove();
-				// })
+				var firebaseRemove = $(this).closest('tr').attr("data-key")
+
+				firebase.database().ref().child(firebaseRemove).remove()
 
 
 				$(this).closest('tr').remove();
