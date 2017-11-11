@@ -9,6 +9,7 @@ var rows = 1;
 var dataZero = [];
 var dataOne = [];
 var dataTwo = [];
+var theRandomList = [];
 
 
 //this function initializes the google map on the screen
@@ -95,6 +96,7 @@ function initMap() {
 		var userAddress = $("#input").val().trim();
 		var userDistance = $("#distance").val().trim();
 		$("#error").empty();
+		theRandomList = [];
 
 
 		if (userAddress === "") {
@@ -157,7 +159,12 @@ function initMap() {
 				var cuisineRandom = cuisineList[Math.floor(Math.random() * cuisineList.length)];
 				// .. then it adds the text of whatever cuisine it chose to the HTML page.. entity_type=city&
 				$("#cuisine").text(cuisineRandom);
-				var queryURL2 = "https://developers.zomato.com/api/v2.1/search?q=" + cuisineRandom + "&radius=" + userDistance + "000&count=3&lat=" + userLat + "&lon=" + userLong + "&sort=real_distance&sort=rating";
+				// console.log(cuisineRandom)
+				// console.log(userLat);
+				// console.log(userLong);
+				// console.log(userDistance);
+				
+				var queryURL2 = "https://developers.zomato.com/api/v2.1/search?q=" + cuisineRandom + "&cuisines=" + cuisineRandom + "&radius=" + userDistance + "000&count=6&lat=" + userLat + "&lon=" + userLong;
 				lat = [];
 				long = [];
 				restaurantName = [];
@@ -183,8 +190,46 @@ function initMap() {
 					}).done(function(response)
 					{
 							//this creates an initial JSON response to find what information you need
-							console.log(response.restaurants);
+							// console.log(response.restaurants);
 
+							
+							var randomNumbers = []
+								while(randomNumbers.length < response.restaurants.length){
+								    var randomnumber = Math.floor(Math.random() * response.restaurants.length)
+								    if(randomNumbers.indexOf(randomnumber) > -1) continue;
+								    randomNumbers[randomNumbers.length] = randomnumber;
+								}
+								// console.log(randomNumbers)
+								if (response.restaurants.length > 10) {
+									for (i = 0; i < 3; i++) {
+										theRandomList.push(response.restaurants[randomNumbers[i]]);
+
+									}
+								}
+								else if (response.restaurants.length > 3) {
+									for (i = 0; i < 3; i++) {
+										theRandomList.push(response.restaurants[Math.floor(Math.random() * response.restaurants.length)]);
+
+										}
+
+										if (theRandomList[0].restaurant.name === theRandomList[1].restaurant.name || theRandomList[0].restaurant.name === theRandomList[2].restaurant.name || theRandomList[1].restaurant.name === theRandomList[2].restaurant.name) {
+											theRandomList = [];
+											for (i = 0; i < 3; i++) {
+												theRandomList.push(response.restaurants[i]);
+
+											}
+
+										}
+									
+
+								} else {
+									for (i = 0; i < 3; i++) {
+										theRandomList.push(response.restaurants[i]);
+									}
+								}
+
+
+							console.log(theRandomList)
 							border = 1;
 							box = 1;
 
@@ -219,7 +264,7 @@ function initMap() {
 								}
 								$(".box" + 1).removeClass();
 								$(".box" + 3).removeClass();
-								$("#restaurant-" + 2).text("No Restaurants Found. Try Again!");
+								$("#restaurant-" + 2).html("No <span class='nothing'>" + cuisineRandom + " </span>Restaurants Found.");
 
 							}
 
@@ -359,33 +404,33 @@ function initMap() {
 							}
 							else {
 
-								for (i = 0; i < response.restaurants.length; i++) {
+								for (i = 0; i < theRandomList.length; i++) {
 
-									$("#restaurant-" + restaurants).text(response.restaurants[i].restaurant.name);
+									$("#restaurant-" + restaurants).text(theRandomList[i].restaurant.name);
 									$("#restaurant-" + restaurants).addClass("animated jello");
 
 									//then it runs through this for loop creating a console.log for each of the 3 restaurants...
 
-									$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + response.restaurants[i].restaurant.average_cost_for_two + "</p>" +
-									"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
-									"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
-									"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
-									// console.log("Latitude: " + response.restaurants[i].restaurant.location.latitude);
-									// console.log("Longitude: " + response.restaurants[i].restaurant.location.longitude);
-									// console.log("Image: " + response.restaurants[i].restaurant.photos_url)
+									$("#info-" + info).html("<p><strong>Average Cost For Two:</strong> " + theRandomList[i].restaurant.average_cost_for_two + "</p>" +
+									"<p><strong>Rating:</strong> " + theRandomList[i].restaurant.user_rating.aggregate_rating + "</p>" +
+									"<p><strong>Rank:</strong> " + theRandomList[i].restaurant.user_rating.rating_text + "</p>" +
+									"<p><strong>Number Of Votes:</strong> " + theRandomList[i].restaurant.user_rating.votes + "</p>");
+									// console.log("Latitude: " + theRandomList[i].restaurant.location.latitude);
+									// console.log("Longitude: " + theRandomList[i].restaurant.location.longitude);
+									// console.log("Image: " + theRandomList[i].restaurant.photos_url)
 
 									//we then are pushing the float number (decimal number) into the lat/long array...
 
-									lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
-									long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
+									lat.push(parseFloat(theRandomList[i].restaurant.location.latitude));
+									long.push(parseFloat(theRandomList[i].restaurant.location.longitude));
 									contentString.push();
 
 									// console.log(lat);
 									// console.log(long);
 									
-									restaurantName.push(response.restaurants[i].restaurant.name);
-									restaurantAddress.push(response.restaurants[i].restaurant.location.address);
-									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong><br><h5>Menu/Reviews: </h5><a href='" + response.restaurants[i].restaurant.url + "' target='_blank'> More Info </a>");
+									restaurantName.push(theRandomList[i].restaurant.name);
+									restaurantAddress.push(theRandomList[i].restaurant.location.address);
+									infowindows.push("<h4>Restaurant:</h4><strong>" + restaurantName[i] + "</strong><h4>Address:</h4><strong>" + restaurantAddress[i] + "</strong><br><h5>Menu/Reviews: </h5><a href='" + theRandomList[i].restaurant.url + "' target='_blank'> More Info </a>");
 									// console.log(restaurantName);
 									// console.log(restaurantAddress);
 
@@ -397,9 +442,9 @@ function initMap() {
 									info++;
 								}
 
-									dataZero.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[0].restaurant.url + "'>More Info</a>");
-									dataOne.push(cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[1].restaurant.url + "'>More Info</a>");
-									dataTwo.push(cuisineRandom, response.restaurants[2].restaurant.name, response.restaurants[2].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[2].restaurant.url + "'>More Info</a>");
+									dataZero.push(cuisineRandom, theRandomList[0].restaurant.name, theRandomList[0].restaurant.user_rating.rating_text, "<a target='_blank' href='" + theRandomList[0].restaurant.url + "'>More Info</a>");
+									dataOne.push(cuisineRandom, theRandomList[1].restaurant.name, theRandomList[1].restaurant.user_rating.rating_text, "<a target='_blank' href='" + theRandomList[1].restaurant.url + "'>More Info</a>");
+									dataTwo.push(cuisineRandom, theRandomList[2].restaurant.name, theRandomList[2].restaurant.user_rating.rating_text, "<a target='_blank' href='" + theRandomList[2].restaurant.url + "'>More Info</a>");
 
 									// console.log(dataZero);
 									// console.log(dataOne);
