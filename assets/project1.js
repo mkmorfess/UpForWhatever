@@ -134,7 +134,7 @@ function initMap() {
 
 		// this first ajax gets the cuisine list from zomato and pushes it into the array of cuisineList
 		if (loading === true){
-			$("");
+			return false;
 		}
 		else{
 			$.ajax({
@@ -164,7 +164,7 @@ function initMap() {
 				// console.log(userLong);
 				// console.log(userDistance);
 				
-				var queryURL2 = "https://developers.zomato.com/api/v2.1/search?q=" + cuisineRandom + "&cuisines=" + cuisineRandom + "&radius=" + userDistance + "000&count=6&lat=" + userLat + "&lon=" + userLong;
+				var queryURL2 = "https://developers.zomato.com/api/v2.1/search?q=" + cuisineRandom + "&cuisines=" + cuisineRandom + "&radius=" + userDistance + "000&count=10&lat=" + userLat + "&lon=" + userLong;
 				lat = [];
 				long = [];
 				restaurantName = [];
@@ -190,39 +190,56 @@ function initMap() {
 					}).done(function(response)
 					{
 							//this creates an initial JSON response to find what information you need
-							// console.log(response.restaurants);
+							console.log(response.restaurants);
 
-							
+					if (response.restaurants.length === 0) {
+						cuisineRandom
+					}
+					// var compareCuisines = [];
+
+					// for (i = 0; i < response.restaurants.length; i++){
+
+					// 	var precise = response.restaurants[i].restaurant.name
+					// 	var n = precise.includes(cuisineRandom)
+					// 	if (n === true) {
+					// 		console.log("true")
+					// 	}
+					// }
+
+					//this here generates random numbers...
 							var randomNumbers = []
 								while(randomNumbers.length < response.restaurants.length){
 								    var randomnumber = Math.floor(Math.random() * response.restaurants.length)
 								    if(randomNumbers.indexOf(randomnumber) > -1) continue;
 								    randomNumbers[randomNumbers.length] = randomnumber;
 								}
-								// console.log(randomNumbers)
-								if (response.restaurants.length > 10) {
+								//then plugs them into the if statement to generate a random response.restaurants
+								//the reason i did it this way and not using Math.random is because this way its a unique random number and doesnt repeat the same random number
+								console.log(randomNumbers)
+								if (response.restaurants.length > 3) {
 									for (i = 0; i < 3; i++) {
 										theRandomList.push(response.restaurants[randomNumbers[i]]);
 
 									}
 								}
-								else if (response.restaurants.length > 3) {
-									for (i = 0; i < 3; i++) {
-										theRandomList.push(response.restaurants[Math.floor(Math.random() * response.restaurants.length)]);
+								// else if (response.restaurants.length > 3) {
+								// 	for (i = 0; i < 3; i++) {
+								// 		theRandomList.push(response.restaurants[Math.floor(Math.random() * response.restaurants.length)]);
 
-										}
+								// 		}
 
-										if (theRandomList[0].restaurant.name === theRandomList[1].restaurant.name || theRandomList[0].restaurant.name === theRandomList[2].restaurant.name || theRandomList[1].restaurant.name === theRandomList[2].restaurant.name) {
-											theRandomList = [];
-											for (i = 0; i < 3; i++) {
-												theRandomList.push(response.restaurants[i]);
+								// 		if (theRandomList[0].restaurant.name === theRandomList[1].restaurant.name || theRandomList[0].restaurant.name === theRandomList[2].restaurant.name || theRandomList[1].restaurant.name === theRandomList[2].restaurant.name) {
+								// 			theRandomList = [];
+								// 			for (i = 0; i < 3; i++) {
+								// 				theRandomList.push(response.restaurants[i]);
 
-											}
+								// 			}
 
-										}
+								// 		}
 									
 
-								} else {
+								// } 
+								else {
 									for (i = 0; i < 3; i++) {
 										theRandomList.push(response.restaurants[i]);
 									}
