@@ -27,7 +27,8 @@ function initMap() {
 	function addMarker(coords, restInfo) {
 		var marker = new google.maps.Marker({
 			position: coords,
-			map: map
+			map: map,
+			animation : google.maps.Animation.DROP
 		});
 
 		markers.push(marker);
@@ -42,8 +43,6 @@ function initMap() {
 		marker.addListener('click', function() {
           infowindow.open(map, marker);
         });
-
-        // $(".moreInfo").on("click")
 	}
 
 	//function that goes through the markers array - helps to delete markers
@@ -130,6 +129,7 @@ function initMap() {
 			var long = [];
 			var restaurants = 1;
 			var info;
+			var buttonInfo;
 			
 
 		// this first ajax gets the cuisine list from zomato and pushes it into the array of cuisineList
@@ -177,6 +177,7 @@ function initMap() {
 				dataZero = [];
 				dataOne = [];
 				dataTwo = [];
+				buttonInfo = 1;
 				// console.log(queryURL2);
 
 				deleteMarkers();
@@ -250,6 +251,24 @@ function initMap() {
 							border = 1;
 							box = 1;
 
+							var buttons1 = $("<button>");
+							buttons1.addClass("btn btn-primary");
+							buttons1.addClass("moreInfo");
+							buttons1.attr("id", "moreInfo1")
+							buttons1.text("More Info");
+
+							var buttons2 = $("<button>");
+							buttons2.addClass("btn btn-primary");
+							buttons2.addClass("moreInfo");
+							buttons2.attr("id", "moreInfo2")
+							buttons2.text("More Info");
+
+							var buttons3 = $("<button>");
+							buttons3.addClass("btn btn-primary");
+							buttons3.addClass("moreInfo");
+							buttons3.attr("id", "moreInfo3")
+							buttons3.text("More Info");
+
 							for (var i = 0; i < 3; i++) {
 
 								$("#border" + border).addClass("box" + box);
@@ -267,13 +286,16 @@ function initMap() {
 
 								box = 1;
 
+
 								for (i = 0; i < 3; i++) {
 
 									$("#restaurant-" + restaurants).html("");
 
 									$("#info-" + info).html("");
 
+									$("#button" + buttonInfo).html("");
 
+									buttonInfo++
 									info++;
 									restaurants++;
 									box++;
@@ -293,10 +315,12 @@ function initMap() {
 									$("#restaurant-" + 1).text("");
 									$(".box" + 1).removeClass();
 									$("#info-" + 1).html("");
+									$("#button1").html("");
 
 									$("#restaurant-" + 3).text("");
 									$(".box" + 3).removeClass();
 									$("#info-" + 3).html("");
+									$("#button3").html("");
 
 								// 	info++
 								// 	restaurants++
@@ -313,6 +337,9 @@ function initMap() {
 									"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
 									"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
 
+									
+									$("#button2").html(buttons2)
+
 									lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
 									long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
 
@@ -326,6 +353,11 @@ function initMap() {
 									addMarker({lat:lat[i], lng:long[i]}, infowindows[i]);
 
 								}
+
+								$("#moreInfo2").click(function(){
+							            google.maps.event.trigger(markers[0], 'click');
+							        });	
+
 								dataOne.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[0].restaurant.url + "'>More Info</a>");
 							}
 
@@ -339,7 +371,7 @@ function initMap() {
 
 									$("#restaurant-" + 2).text("");
 									$(".box" + 2).removeClass();
-
+									$("#button2").html("");
 									$("#info-" + 2).html("");
 
 									// info++;
@@ -369,6 +401,9 @@ function initMap() {
 									"<p><strong>Rating:</strong> " + response.restaurants[i].restaurant.user_rating.aggregate_rating + "</p>" +
 									"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
 									"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
+
+									
+									$("#button1").html(buttons1);
 
 									lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
 									long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
@@ -402,6 +437,9 @@ function initMap() {
 									"<p><strong>Rank:</strong> " + response.restaurants[i].restaurant.user_rating.rating_text + "</p>" +
 									"<p><strong>Number Of Votes:</strong> " + response.restaurants[i].restaurant.user_rating.votes + "</p>");
 
+									
+									$("#button3").html(buttons3);
+
 									lat.push(parseFloat(response.restaurants[i].restaurant.location.latitude));
 									long.push(parseFloat(response.restaurants[i].restaurant.location.longitude));
 
@@ -416,6 +454,13 @@ function initMap() {
 									}
 								// }
 
+								 $("#moreInfo1").click(function(){
+							            google.maps.event.trigger(markers[0], 'click');
+							        });			
+
+								 $("#moreInfo3").click(function(){
+							            google.maps.event.trigger(markers[1], 'click');
+							        });			
 								dataZero.push(cuisineRandom, response.restaurants[0].restaurant.name, response.restaurants[0].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[0].restaurant.url + "'>More Info</a>");
 								dataTwo.push(cuisineRandom, response.restaurants[1].restaurant.name, response.restaurants[1].restaurant.user_rating.rating_text, "<a target='_blank' href='" + response.restaurants[1].restaurant.url + "'>More Info</a>");
 							}
@@ -436,6 +481,7 @@ function initMap() {
 									// console.log("Longitude: " + theRandomList[i].restaurant.location.longitude);
 									// console.log("Image: " + theRandomList[i].restaurant.photos_url)
 
+
 									//we then are pushing the float number (decimal number) into the lat/long array...
 
 									lat.push(parseFloat(theRandomList[i].restaurant.location.latitude));
@@ -455,9 +501,14 @@ function initMap() {
 									addMarker({lat:lat[i], lng:long[i]}, infowindows[i]);
 									// console.log(markers);
 									// console.log(contentString);
+									buttonInfo++;
 									restaurants++;
 									info++;
 								}
+
+									$("#button1").html(buttons1);
+									$("#button2").html(buttons2);
+									$("#button3").html(buttons3);
 
 									dataZero.push(cuisineRandom, theRandomList[0].restaurant.name, theRandomList[0].restaurant.user_rating.rating_text, "<a target='_blank' href='" + theRandomList[0].restaurant.url + "'>More Info</a>");
 									dataOne.push(cuisineRandom, theRandomList[1].restaurant.name, theRandomList[1].restaurant.user_rating.rating_text, "<a target='_blank' href='" + theRandomList[1].restaurant.url + "'>More Info</a>");
@@ -465,7 +516,19 @@ function initMap() {
 
 									// console.log(dataZero);
 									// console.log(dataOne);
-									// console.log(dataTwo);															
+									// console.log(dataTwo);
+
+									$("#moreInfo1").click(function(){
+							            google.maps.event.trigger(markers[0], 'click');
+							        });
+
+							        $("#moreInfo2").click(function(){
+							            google.maps.event.trigger(markers[1], 'click');
+							        });
+
+							        $("#moreInfo3").click(function(){
+							            google.maps.event.trigger(markers[2], 'click');
+							        });															
 							}				
 
 
@@ -482,9 +545,12 @@ function initMap() {
 				}				
  			});
 		}
+
+		 
+
 	});
 
-		$(".click1").unbind("click").on("click", function () {
+		$("#border1").unbind("click").on("click", function () {
 
 			if (dataZero.length === 0) {
 				return false;
@@ -509,7 +575,7 @@ function initMap() {
 		  
 		});
 
-		$(".click2").unbind("click").on("click", function () {
+		$("#border2").unbind("click").on("click", function () {
 
 			if (dataOne.length === 0) {
 				return false;
@@ -533,7 +599,7 @@ function initMap() {
 		  
 		});
 
-		$(".click3").unbind("click").on("click", function () {
+		$("#border3").unbind("click").on("click", function () {
 
 			if (dataTwo.length === 0) {
 				return false;

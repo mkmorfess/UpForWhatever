@@ -21,10 +21,13 @@ title {
 	text-shadow: 2px 2px #000000; 
 }
 
-
+.panel {
+	margin-top:40px;
+}
 
 #table {
 	/*background-color: #FAFAD2;*/
+
 	background-image: url("box1.jpg");
 	color: black; 
 	text-shadow: 2px 2px white; 
