@@ -37,7 +37,7 @@
        <div class="col-lg-4" id="topButton">
           <h1 class="animated jello" id="topHeader">Up For Whatever?</h1>
           <h3 class="buttonText">Not sure what you're in the mood to eat? Let us decide for you!</h3>
-          <h3 class="buttonText">Type in your location below to find a random cuisine near you.</h3>
+          <h3 class="buttonText">Type in your location below to find a random cuisine and a few restaurants to choose from near you!</h3>
           </div>
           <div class="container col-4-md">
           <form id="random">
@@ -131,10 +131,10 @@
               <div id="table" class="panel-heading panel-primary text-center">Favorite Restaurant List</div>
             <table id="main" class="table">
               <tr>
-                <th>Cuisine</th>
-                <th>Name</th>
-                <th>Ranking</th>
-                <th>Restaurant Link</th>
+                <th onclick="sortTable(0)">Cuisine</th>
+                <th onclick="sortTable(1)">Name</th>
+                <th onclick="sortTable(2)">Ranking</th>
+                <th onclick="sortTable(3)">Restaurant Link</th>
                 <th class="text-center"></th>
               </tr>
             </table>
