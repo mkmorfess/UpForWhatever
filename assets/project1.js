@@ -754,7 +754,11 @@ function sortTable(n) {
   }
 }
 
-
+$(window).resize(function(){
+	if ($(window).width() <= 800){	
+		alert("This works")
+	}	
+});
 
 
 
