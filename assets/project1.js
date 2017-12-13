@@ -104,7 +104,7 @@ function initMap() {
 
 		else {
 
-			//I have NO clue how this even works.. found it online on stack overflow... LOL https://stackoverflow.com/questions/7499862/how-to-geocode-an-address-into-lat-long-with-google-maps
+			//https://stackoverflow.com/questions/7499862/how-to-geocode-an-address-into-lat-long-with-google-maps
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode( { 'address': userAddress}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
@@ -632,7 +632,8 @@ function initMap() {
 
 		database.ref().on("child_added", function(snapshot) { 
 
-			input = [snapshot.val().Cuisine, snapshot.val().Restaurant_Name, snapshot.val().Rank, snapshot.val().MoreInfo, "<button class='userRemove close text-center'>Remove</button>"];
+			input = [snapshot.val().Cuisine, snapshot.val().Restaurant_Name, snapshot.val().Rank, snapshot.val().MoreInfo];
+			//"<button class='userRemove close text-center'>Remove</button>"
 			var key = snapshot.key;
 			var tableRow = $("<tr>");
 			tableRow.attr("data-key", key)
@@ -640,14 +641,26 @@ function initMap() {
 			tableRow.addClass("dataInRows");
 			$("#main").append(tableRow);
 
-				for (var i = 0; i < 5; i++) {
+				for (var i = 0; i < 4; i++) {
 
+					if (i === 3) {
+
+						var tableData = $("<td>");
+						// tableData.addClass("text-center")
+						tableData.html(input[i]);
+
+						tableRow.append(tableData);
+
+					}
+
+					else {
 					var tableData = $("<td>");
+					tableData.addClass("remove")
 					// tableData.addClass("text-center")
 					tableData.html(input[i]);
 
 					tableRow.append(tableData);
-
+					}
 				}
 
 				rows++;
@@ -662,7 +675,7 @@ function initMap() {
 var Restaurant_Name;
 
 function userRemove () {
-	$(".userRemove").off().on("click", function(){
+	$(".remove").off().on("click", function(){
 
 			var remove = confirm("Do you want to delete from your favorites?");
 
