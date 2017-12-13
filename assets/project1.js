@@ -635,6 +635,7 @@ function initMap() {
 			input = [snapshot.val().Cuisine, snapshot.val().Restaurant_Name, snapshot.val().MoreInfo];
 			// these 2 go into input if you want rank and a remove button: snapshot.val().Rank
 			//"<button class='userRemove close text-center'>Remove</button>"
+			//...
 			var key = snapshot.key;
 			var tableRow = $("<tr>");
 			tableRow.attr("data-key", key)
