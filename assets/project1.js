@@ -632,7 +632,8 @@ function initMap() {
 
 		database.ref().on("child_added", function(snapshot) { 
 
-			input = [snapshot.val().Cuisine, snapshot.val().Restaurant_Name, snapshot.val().Rank, snapshot.val().MoreInfo];
+			input = [snapshot.val().Cuisine, snapshot.val().Restaurant_Name, snapshot.val().MoreInfo];
+			// these 2 go into input if you want rank and a remove button: snapshot.val().Rank
 			//"<button class='userRemove close text-center'>Remove</button>"
 			var key = snapshot.key;
 			var tableRow = $("<tr>");
@@ -641,7 +642,7 @@ function initMap() {
 			tableRow.addClass("dataInRows");
 			$("#main").append(tableRow);
 
-				for (var i = 0; i < 5; i++) {
+				for (var i = 0; i < 4; i++) {
 
 					if (i === 3) {
 
@@ -753,12 +754,6 @@ function sortTable(n) {
     }
   }
 }
-
-$(window).resize(function(){
-	if ($(window).width() <= 800){	
-		alert("This works")
-	}	
-});
 
 
 
