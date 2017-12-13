@@ -632,9 +632,9 @@ function initMap() {
 
 		database.ref().on("child_added", function(snapshot) { 
 
-			input = [snapshot.val().Cuisine, snapshot.val().Restaurant_Name, snapshot.val().MoreInfo];
+			input = [snapshot.val().Cuisine, snapshot.val().Restaurant_Name, snapshot.val().MoreInfo, "<button style='color: darkred' class='userRemove close text-center'>X</button>"];
 			// these 2 go into input if you want rank and a remove button: snapshot.val().Rank
-			//"<button class='userRemove close text-center'>Remove</button>"
+			
 			//...
 			var key = snapshot.key;
 			var tableRow = $("<tr>");
@@ -645,7 +645,7 @@ function initMap() {
 
 				for (var i = 0; i < 4; i++) {
 
-					if (i === 3) {
+					if (i === 2) {
 
 						var tableData = $("<td>");
 						// tableData.addClass("text-center")
@@ -657,7 +657,7 @@ function initMap() {
 
 					else {
 					var tableData = $("<td>");
-					tableData.addClass("remove")
+					// tableData.addClass("remove")
 					// tableData.addClass("text-center")
 					tableData.html(input[i]);
 
@@ -677,8 +677,8 @@ function initMap() {
 var Restaurant_Name;
 
 function userRemove () {
-	$(".remove").off().on("click", function(){
-		//...
+	$(".userRemove").off().on("click", function(){
+		
 			var remove = confirm("Do you want to delete from your favorites?");
 
 			if (remove === true) {
