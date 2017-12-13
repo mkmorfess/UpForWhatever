@@ -678,7 +678,7 @@ var Restaurant_Name;
 
 function userRemove () {
 	$(".remove").off().on("click", function(){
-
+		//...
 			var remove = confirm("Do you want to delete from your favorites?");
 
 			if (remove === true) {
