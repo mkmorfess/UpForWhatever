@@ -641,7 +641,7 @@ function initMap() {
 			tableRow.addClass("dataInRows");
 			$("#main").append(tableRow);
 
-				for (var i = 0; i < 4; i++) {
+				for (var i = 0; i < 5; i++) {
 
 					if (i === 3) {
 
